@@ -152,7 +152,56 @@ namespace UndertaleBattleSystemPrototype.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///.
+        ///&lt;Player&gt;
+        ///  &lt;Stats&gt;
+        ///    &lt;General Name =&quot;Chris&quot;
+        ///             Lvl =&quot;1&quot;
+        ///             gold =&quot;0&quot;
+        ///             exp =&quot;0&quot;&gt;
+        ///    &lt;/General&gt;
+        ///    &lt;Battle currentHP =&quot;20&quot;
+        ///            maxHP =&quot;20&quot;
+        ///            atk =&quot;0&quot;
+        ///            def =&quot;0&quot;&gt;
+        ///    &lt;/Battle&gt;
+        ///  &lt;/Stats&gt;
+        ///  &lt;Items&gt;
+        ///    &lt;Equiped weapon =&quot; &quot;
+        ///             armor =&quot; &quot;&gt;
+        ///    &lt;/Equiped&gt;
+        ///    &lt;Inventory item1 =&quot; &quot;
+        ///               item2 =&quot; &quot;
+        ///               item3 =&quot; &quot;
+        ///               item4 =&quot; &quot;&gt;
+        ///    &lt;/Inventory&gt;
+        ///  &lt;/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Player {
+            get {
+                return ResourceManager.GetString("Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Enemy&gt;
+        ///  &lt;Stats&gt;
+        ///    &lt;Attack&gt;2&lt;/Attack&gt;
+        ///    &lt;Defence&gt;0&lt;/Defence&gt;
+        ///  &lt;/Stats&gt;
+        ///  &lt;ActMenu&gt;
+        ///    &lt;Act actName =&quot;Check&quot; 
+        ///          actLine1 =&quot;TESTENEMY 2 ATK 0 DEF&quot;
+        ///          actLine2 =&quot;Basic enemy example&quot;&gt; 
+        ///    &lt;/Act&gt;
+        ///    &lt;Act actName =&quot;Joke&quot;
+        ///          actLine1 =&quot;Test Enemy laughs.&quot;
+        ///          actLine2 =&quot;...&quot;
+        ///          actLine3 =&quot;It&apos;s fake laughter though.&quot;&gt;
+        ///    &lt;/Act&gt;
+        ///    &lt;Act actName =&quot;Taunt&quot;
+        ///          actLine1 =&quot;Test Enemy just stares at you.&quot;&gt;
+        ///    &lt;/A [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestEnemy {
             get {

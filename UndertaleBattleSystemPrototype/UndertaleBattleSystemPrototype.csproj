@@ -121,5 +121,8 @@
   <ItemGroup>
     <None Include="Resources\TestEnemy.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Player.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

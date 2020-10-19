@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Player>
+  <Stats>
+    <General Name ="Chris"
+             Lvl ="1"
+             gold ="0"
+             exp ="0">
+    </General>
+    <Battle currentHP ="20"
+            maxHP ="20"
+            atk ="0"
+            def ="0">
+    </Battle>
+  </Stats>
+  <Items>
+    <Equiped weapon =" "
+             armor =" ">
+    </Equiped>
+    <Inventory item1 =" "
+               item2 =" "
+               item3 =" "
+               item4 =" ">
+    </Inventory>
+  </Items>
+</Player>

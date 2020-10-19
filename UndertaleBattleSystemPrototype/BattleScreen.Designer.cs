@@ -35,6 +35,10 @@
             this.actLabel2 = new System.Windows.Forms.Label();
             this.actLabel3 = new System.Windows.Forms.Label();
             this.actLabel4 = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.levelLabel = new System.Windows.Forms.Label();
+            this.hpLabel = new System.Windows.Forms.Label();
+            this.hpValueLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -113,11 +117,67 @@
             this.actLabel4.Text = "Act4";
             this.actLabel4.Visible = false;
             // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.nameLabel.Enabled = false;
+            this.nameLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.ForeColor = System.Drawing.Color.White;
+            this.nameLabel.Location = new System.Drawing.Point(40, 545);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(62, 28);
+            this.nameLabel.TabIndex = 5;
+            this.nameLabel.Text = "NAME";
+            // 
+            // levelLabel
+            // 
+            this.levelLabel.AutoSize = true;
+            this.levelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.levelLabel.Enabled = false;
+            this.levelLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.levelLabel.ForeColor = System.Drawing.Color.White;
+            this.levelLabel.Location = new System.Drawing.Point(140, 545);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Size = new System.Drawing.Size(65, 28);
+            this.levelLabel.TabIndex = 6;
+            this.levelLabel.Text = "LVL 0";
+            // 
+            // hpLabel
+            // 
+            this.hpLabel.AutoSize = true;
+            this.hpLabel.BackColor = System.Drawing.Color.Transparent;
+            this.hpLabel.Enabled = false;
+            this.hpLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hpLabel.ForeColor = System.Drawing.Color.White;
+            this.hpLabel.Location = new System.Drawing.Point(364, 545);
+            this.hpLabel.Name = "hpLabel";
+            this.hpLabel.Size = new System.Drawing.Size(36, 28);
+            this.hpLabel.TabIndex = 7;
+            this.hpLabel.Text = "HP";
+            // 
+            // hpValueLabel
+            // 
+            this.hpValueLabel.AutoSize = true;
+            this.hpValueLabel.BackColor = System.Drawing.Color.Transparent;
+            this.hpValueLabel.Enabled = false;
+            this.hpValueLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hpValueLabel.ForeColor = System.Drawing.Color.White;
+            this.hpValueLabel.Location = new System.Drawing.Point(500, 545);
+            this.hpValueLabel.Name = "hpValueLabel";
+            this.hpValueLabel.Size = new System.Drawing.Size(82, 28);
+            this.hpValueLabel.TabIndex = 8;
+            this.hpValueLabel.Text = "40 / 40";
+            // 
             // BattleScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.hpValueLabel);
+            this.Controls.Add(this.hpLabel);
+            this.Controls.Add(this.levelLabel);
+            this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.actLabel4);
             this.Controls.Add(this.actLabel3);
             this.Controls.Add(this.actLabel2);
@@ -142,5 +202,9 @@
         private System.Windows.Forms.Label actLabel2;
         private System.Windows.Forms.Label actLabel3;
         private System.Windows.Forms.Label actLabel4;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Label levelLabel;
+        private System.Windows.Forms.Label hpLabel;
+        private System.Windows.Forms.Label hpValueLabel;
     }
 }

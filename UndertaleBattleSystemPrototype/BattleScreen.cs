@@ -26,8 +26,10 @@ namespace UndertaleBattleSystemPrototype
         //booleans for checking what menu the player is in
         Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
 
-        //brush for walls and projectiles
+        //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
+        SolidBrush redBrush = new SolidBrush(Color.Red);
+        SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
 
         //create the player
         Player player = new Player();
@@ -37,6 +39,10 @@ namespace UndertaleBattleSystemPrototype
 
         //create rectangles for buttons
         Rectangle fightRec, actRec, itemRec, mercyRec;
+
+        //health bar rectangles
+        Rectangle maxHPRec = new Rectangle(410, 550, 80, 20);
+        Rectangle remainingHPRec = new Rectangle(410, 550, 80, 20);
 
         //new list for battle area walls
         List<Rectangle> arenaWalls = new List<Rectangle>();
@@ -338,6 +344,10 @@ namespace UndertaleBattleSystemPrototype
             e.Graphics.DrawImage(actSprite, actRec);
             e.Graphics.DrawImage(itemSprite, itemRec);
             e.Graphics.DrawImage(mercySprite, mercyRec);
+
+            //draw the health bar
+            e.Graphics.FillRectangle(redBrush, maxHPRec);
+            e.Graphics.FillRectangle(yellowBrush, remainingHPRec);
 
             //draw the player
             e.Graphics.DrawImage(playerSprite, player.x, player.y);

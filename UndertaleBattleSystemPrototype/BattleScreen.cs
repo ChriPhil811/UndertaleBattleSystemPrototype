@@ -23,6 +23,9 @@ namespace UndertaleBattleSystemPrototype
         //boolean for checking if player is in the fighting area or not
         Boolean isFighting = false;
 
+        //booleans for checking what menu the player is in
+        Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
+
         //brush for walls and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
 
@@ -48,9 +51,6 @@ namespace UndertaleBattleSystemPrototype
         public BattleScreen()
         {
             InitializeComponent();
-
-            //setup the act menu for the current enemy
-            ActMenuText();
 
             //screen setup
             OnStart();
@@ -191,7 +191,8 @@ namespace UndertaleBattleSystemPrototype
             //if player is in the buttons and menus...
             else
             {
-                ActMenu();
+                if (actMenuSelected == true) { ActMenu(); }
+                if (mercyMenuSelected == true) { MercyMenu(); }
 
                 //check which button the player is currently on and set it to the blank version of the button's sprite
                 //if player moves to a different button, change button sprite back and set player position to the new button
@@ -214,6 +215,7 @@ namespace UndertaleBattleSystemPrototype
                 if (playerRec.IntersectsWith(actRec))
                 {
                     actSprite = Properties.Resources.actButtonBlank;
+                    actMenuSelected = false;
 
                     //go into the act menu
                     if (spaceDown == true)
@@ -229,6 +231,12 @@ namespace UndertaleBattleSystemPrototype
 
                         //set player position to the act1 label
                         player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+
+                        //setup the act menu for the current enemy
+                        ActMenuText();
+
+                        //set boolean for act menu check to true
+                        actMenuSelected = true;
 
                         Thread.Sleep(150);
                     }
@@ -247,6 +255,7 @@ namespace UndertaleBattleSystemPrototype
                         Thread.Sleep(150);
                     }
                 }
+
                 #endregion act
 
                 #region item
@@ -275,7 +284,29 @@ namespace UndertaleBattleSystemPrototype
                 if (playerRec.IntersectsWith(mercyRec))
                 {
                     mercySprite = Properties.Resources.mercyButtonBlank;
+                    mercyMenuSelected = false;
 
+                    //go into the mercy menu
+                    if (spaceDown == true)
+                    {
+                        //make the text output not visible
+                        textOutput.Visible = false;
+
+                        ///make the act labels visible
+                        actLabel1.Visible = true;
+                        actLabel2.Visible = true;
+
+                        //set player position to the act1 label
+                        player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+
+                        //setup the act menu for the current enemy
+                        MercyMenuText();
+
+                        //set boolean for mercy menu check to true
+                        mercyMenuSelected = true;
+
+                        Thread.Sleep(150);
+                    }
                     if (aDown == true)
                     {
                         mercySprite = Properties.Resources.mercyButton;
@@ -496,20 +527,119 @@ namespace UndertaleBattleSystemPrototype
             int i = 0;
 
             //create an xml reader
-            XmlReader reader = XmlReader.Create("file:///C:/Users/Chris/source/repos/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/TestEnemy.xml");
+            XmlReader reader = XmlReader.Create("file:///C:/Users/chriphil811/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/TestEnemy.xml");
 
             while (reader.Read() && i < 4)
             {
                 //read to the next action in the enemy xml file
                 reader.ReadToFollowing("Act");
 
-                //fill out the proper details for the act1 option
+                //fill out the proper details for each act option
                 actNames[i] = Convert.ToString(reader.GetAttribute("actName"));
                 actText[i] = "* " + Convert.ToString(reader.GetAttribute("actLine1")) + "\n\n* " + Convert.ToString(reader.GetAttribute("actLine2")) + "\n\n* " + Convert.ToString(reader.GetAttribute("actLine3"));
 
                 //add 1 to the counter
                 i++;
             }
+
+            //these lines of code are nessecary for the initial display of each label
+            actLabel1.Text = "* " + actNames[0];
+            actLabel2.Text = "* " + actNames[1];
+            actLabel3.Text = "* " + actNames[2];
+            actLabel4.Text = "* " + actNames[3];
+        }
+        #endregion act menu text
+
+        #region mercy menu
+        private void MercyMenu()
+        {
+            //if for player exiting the act menu
+            if (shiftDown == true)
+            {
+                //show the main text output
+                textOutput.Visible = true;
+
+                //hide the act labels
+                actLabel1.Visible = false;
+                actLabel2.Visible = false;
+
+                //set player back to the act button
+                player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+
+                Thread.Sleep(150);
+            }
+
+            //check which act option the player is on and do things accordingly
+            #region option selection
+            if (player.x == actLabel1.Location.X && player.y == actLabel1.Location.Y + 5)
+            {
+                actLabel1.Text = "  " + actNames[0];
+
+                //show the output text and hide the act options
+                //set output text to the appropriate text and go back to the act button
+                if (spaceDown == true)
+                {
+                    textOutput.Text = actText[0];
+                    textOutput.Visible = true;
+
+                    actLabel1.Visible = false;
+                    actLabel2.Visible = false;
+
+                    player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+
+                    Thread.Sleep(150);
+                }
+                //move to option 2
+                if (dDown == true)
+                {
+                    actLabel1.Text = "* " + actNames[0];
+                    player = new Player(actLabel2.Location.X, actLabel2.Location.Y + 5, 20);
+
+                    Thread.Sleep(150);
+                }
+            }
+            if (player.x == actLabel2.Location.X && player.y == actLabel2.Location.Y + 5)
+            {
+                actLabel2.Text = "  " + actNames[1];
+
+                //show the output text and hide the act options
+                //set output text to the appropriate text and go back to the act button
+                if (spaceDown == true)
+                {
+                    textOutput.Text = actText[1];
+                    textOutput.Visible = true;
+
+                    actLabel1.Visible = false;
+                    actLabel2.Visible = false;
+
+                    player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+
+                    Thread.Sleep(150);
+                }
+                //move to option 1
+                if (aDown == true)
+                {
+                    actLabel2.Text = "* " + actNames[1];
+                    player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+
+                    Thread.Sleep(150);
+                }
+            }
+            #endregion option selection
+        }
+        #endregion mercy menu
+        #region act menu text
+        private void MercyMenuText()
+        {
+            //set the action names and display them
+            actNames[0] = "Spare";
+            actNames[1] = "Flee";
+            actLabel1.Text = "* Spare";
+            actLabel2.Text = "* Flee";
+
+            //set the action results
+            actText[0] = "* ...";
+            actText[1] = "* You ran away...";
         }
         #endregion act menu text
 

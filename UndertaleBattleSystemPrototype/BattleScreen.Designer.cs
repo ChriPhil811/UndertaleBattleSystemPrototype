@@ -36,7 +36,6 @@
             this.actLabel3 = new System.Windows.Forms.Label();
             this.actLabel4 = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
-            this.levelLabel = new System.Windows.Forms.Label();
             this.hpLabel = new System.Windows.Forms.Label();
             this.hpValueLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -130,19 +129,6 @@
             this.nameLabel.TabIndex = 5;
             this.nameLabel.Text = "NAME";
             // 
-            // levelLabel
-            // 
-            this.levelLabel.AutoSize = true;
-            this.levelLabel.BackColor = System.Drawing.Color.Transparent;
-            this.levelLabel.Enabled = false;
-            this.levelLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.levelLabel.ForeColor = System.Drawing.Color.White;
-            this.levelLabel.Location = new System.Drawing.Point(140, 545);
-            this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(65, 28);
-            this.levelLabel.TabIndex = 6;
-            this.levelLabel.Text = "LVL 0";
-            // 
             // hpLabel
             // 
             this.hpLabel.AutoSize = true;
@@ -176,7 +162,6 @@
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.hpValueLabel);
             this.Controls.Add(this.hpLabel);
-            this.Controls.Add(this.levelLabel);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.actLabel4);
             this.Controls.Add(this.actLabel3);
@@ -203,7 +188,6 @@
         private System.Windows.Forms.Label actLabel3;
         private System.Windows.Forms.Label actLabel4;
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.Label levelLabel;
         private System.Windows.Forms.Label hpLabel;
         private System.Windows.Forms.Label hpValueLabel;
     }

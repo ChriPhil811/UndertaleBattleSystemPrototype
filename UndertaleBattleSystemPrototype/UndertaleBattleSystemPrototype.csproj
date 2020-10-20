@@ -122,7 +122,9 @@
     <None Include="Resources\TestEnemy.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Player.xml" />
+    <None Include="Resources\Player.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

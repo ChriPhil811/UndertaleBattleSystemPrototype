@@ -1,25 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Player>
   <Stats>
-    <General Name ="Chris"
-             Lvl ="1"
-             gold ="0"
-             exp ="0">
+    <General name ="CHRIS"
+             gold ="0">
     </General>
-    <Battle currentHP ="20"
-            maxHP ="20"
-            atk ="0"
-            def ="0">
+    <Battle currentHP ="40"
+            atk ="5"
+            def ="5">
     </Battle>
   </Stats>
   <Items>
     <Equiped weapon =" "
              armor =" ">
     </Equiped>
-    <Inventory item1 =" "
-               item2 =" "
-               item3 =" "
-               item4 =" ">
+    <Inventory>
+      <Item name ="Test Item"
+            heal ="10">
+      </Item>
+      <Item name ="Test Item"
+            heal ="5">
+      </Item>
+      <Item name ="Test Item"
+            heal ="20">
+      </Item>
+      <Item name =" "
+            heal ="0">
+      </Item>
     </Inventory>
   </Items>
   <Other>

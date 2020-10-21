@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Xml;
 using UndertaleBattleSystemPrototype.Classes;
+using UndertaleBattleSystemPrototype.Properties;
+using System.IO;
 
 namespace UndertaleBattleSystemPrototype
 {
@@ -32,6 +34,9 @@ namespace UndertaleBattleSystemPrototype
 
         //create an xml reader for the enemy file
         XmlReader eReader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/TestEnemy.xml");
+
+        //create an xml reader and writer for the player file
+        XmlReader reader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/Player.xml");
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
@@ -84,9 +89,6 @@ namespace UndertaleBattleSystemPrototype
         #region setup
         public void OnStart()
         {
-            //create a reader for filling in player details
-            XmlReader reader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/Player.xml");
-
             //fill in player details for battle use
             reader.ReadToFollowing("General");
             name = reader.GetAttribute("name");
@@ -479,7 +481,7 @@ namespace UndertaleBattleSystemPrototype
                 actLabel4.Visible = false;
 
                 //set player back to the item button
-                player = new Player(actRec.X + 15, actRec.Y + 15, 20);
+                player = new Player(itemRec.X + 15, itemRec.Y + 15, 20);
 
                 Thread.Sleep(150);
             }
@@ -491,11 +493,11 @@ namespace UndertaleBattleSystemPrototype
         #region item menu text
         private void ItemMenuText()
         {
-            //create an xml reader for gathering item info
-            XmlReader reader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/Player.xml");
-
             //create a counter
             int i = 0;
+
+            //set reader to the Items section of the player xml file
+            reader.ReadToFollowing("Items");
 
             while (reader.Read() && i < 4)
             {
@@ -701,11 +703,13 @@ namespace UndertaleBattleSystemPrototype
             actLabel3.Visible = false;
             actLabel4.Visible = false;
 
-            //add hp to player if item was used
+            //add hp to player if item was used and remove the item
             if (itemMenuSelected == true)
             {
                 hp += itemHeals[i];
                 if(hp > 40) { hp = 40; }
+
+                PlayerXmlUpdate();
             }
 
             //set all buttons to their non-active state
@@ -717,5 +721,12 @@ namespace UndertaleBattleSystemPrototype
         #endregion menu display code
 
         #endregion menu methods
+
+        #region player xml update method
+        private void PlayerXmlUpdate()
+        {
+
+        }
+        #endregion player xml update method
     }
 }

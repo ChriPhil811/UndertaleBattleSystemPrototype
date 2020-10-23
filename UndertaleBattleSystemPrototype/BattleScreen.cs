@@ -32,11 +32,8 @@ namespace UndertaleBattleSystemPrototype
         int hp, atk, def;
         string name;
 
-        //create an xml reader for the enemy file
-        XmlReader eReader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/TestEnemy.xml");
-
-        //create an xml reader and writer for the player file
-        XmlReader reader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/Player.xml");
+        //create an xml reader for the enemy file and player file
+        XmlReader eReader, pReader;
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
@@ -90,12 +87,16 @@ namespace UndertaleBattleSystemPrototype
         public void OnStart()
         {
             //fill in player details for battle use
-            reader.ReadToFollowing("General");
-            name = reader.GetAttribute("name");
-            reader.ReadToFollowing("Battle");
-            hp = Convert.ToInt16(reader.GetAttribute("currentHP"));
-            atk = Convert.ToInt16(reader.GetAttribute("atk"));
-            def = Convert.ToInt16(reader.GetAttribute("def"));
+            pReader = XmlReader.Create("Resources/Player.xml");
+
+            pReader.ReadToFollowing("General");
+            name = pReader.GetAttribute("name");
+            pReader.ReadToFollowing("Battle");
+            hp = Convert.ToInt16(pReader.GetAttribute("currentHP"));
+            atk = Convert.ToInt16(pReader.GetAttribute("atk"));
+            def = Convert.ToInt16(pReader.GetAttribute("def"));
+
+            pReader.Close();
 
             //set button positions and sizes
             fightRec = new Rectangle(236 - 190, this.Height - 100, 140, 50);
@@ -428,6 +429,9 @@ namespace UndertaleBattleSystemPrototype
                 //set player back to the act button
                 player = new Player(actRec.X + 15, actRec.Y + 15, 20);
 
+                //stop ActMenu() from being called when act menu is exited
+                actMenuSelected = false;
+
                 Thread.Sleep(150);
             }
 
@@ -442,7 +446,7 @@ namespace UndertaleBattleSystemPrototype
             int i = 0;
 
             //set reader to beginning of enemy file
-            eReader.ReadToFollowing("Enemy");
+            eReader = XmlReader.Create("Resources/TestEnemy.xml");
 
             while (eReader.Read() && i < 4)
             {
@@ -456,6 +460,8 @@ namespace UndertaleBattleSystemPrototype
                 //add 1 to the counter
                 i++;
             }
+
+            eReader.Close();
 
             //these lines of code are nessecary for the initial display of each label
             actLabel1.Text = "* " + actNames[0];
@@ -483,6 +489,9 @@ namespace UndertaleBattleSystemPrototype
                 //set player back to the item button
                 player = new Player(itemRec.X + 15, itemRec.Y + 15, 20);
 
+                //stop ItemMenu() from being called when item menu is exited
+                itemMenuSelected = false;
+
                 Thread.Sleep(150);
             }
 
@@ -497,19 +506,21 @@ namespace UndertaleBattleSystemPrototype
             int i = 0;
 
             //set reader to the Items section of the player xml file
-            reader.ReadToFollowing("Items");
+            pReader = XmlReader.Create("Resources/Player.xml");
 
-            while (reader.Read() && i < 4)
+            while (pReader.Read() && i < 4)
             {
                 //gather and set item info for each item
-                reader.ReadToFollowing("Item");
-                actNames[i] = reader.GetAttribute("name");
-                itemHeals[i] = Convert.ToInt16(reader.GetAttribute("heal"));
+                pReader.ReadToFollowing("Item");
+                actNames[i] = pReader.GetAttribute("name");
+                itemHeals[i] = Convert.ToInt16(pReader.GetAttribute("heal"));
 
                 actText[i] = "* You ate the " + actNames[i] + "\n\n* ..." + "\n\n* You recovered " + itemHeals[i] + " HP!";
 
                 i++;
             }
+
+            pReader.Close();
 
             //display items
             actLabel1.Text = "* " + actNames[0];
@@ -534,6 +545,9 @@ namespace UndertaleBattleSystemPrototype
 
                 //set player back to the act button
                 player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+
+                //stop MercyMenu() from being called when mercy menu is exited
+                mercyMenuSelected = false;
 
                 Thread.Sleep(150);
             }
@@ -709,8 +723,14 @@ namespace UndertaleBattleSystemPrototype
                 hp += itemHeals[i];
                 if(hp > 40) { hp = 40; }
 
-                PlayerXmlUpdate();
+                PlayerXmlUpdate(i);
             }
+
+            //make sure menu methods don't continue to be called when not in a menu
+            fightMenuSelected = false;
+            actMenuSelected = false;
+            itemMenuSelected = false;
+            mercyMenuSelected = false;
 
             //set all buttons to their non-active state
             fightSprite = Properties.Resources.fightButton;
@@ -723,9 +743,56 @@ namespace UndertaleBattleSystemPrototype
         #endregion menu methods
 
         #region player xml update method
-        private void PlayerXmlUpdate()
+        private void PlayerXmlUpdate(int i)
         {
+            //open the player xml file adn place it in doc
+            XmlDocument doc = new XmlDocument();
+            doc.Load("Resources/Player.xml");
 
+            //create a list of all nodes called "Item"
+            XmlNodeList itemList = doc.GetElementsByTagName("Item");
+
+            //search each Item node in the list until the text matches the item used
+            //then change it to nothing to get rid of the item
+            foreach (XmlNode n in itemList)
+            {
+                if (n.Attributes[0].InnerText == actNames[i])
+                {
+                    n.Attributes[0].InnerText = " ";
+                    n.Attributes[1].InnerText = "0";
+                }
+            }
+
+            //int for counting
+            i = 0;
+
+            //search each Item node in the list until the text is empty (aka item is empty)
+            //then change it to the next item's info and change the next item's info to be empty
+            //this should move all items back one item in the xml file
+            foreach (XmlNode n in itemList)
+            {
+                if(n.Attributes[0].InnerText == " ")
+                {
+                    if (i < 3)
+                    {
+                        n.Attributes[0].InnerText = itemList[i + 1].Attributes[0].InnerText;
+                        n.Attributes[1].InnerText = itemList[i + 1].Attributes[1].InnerText;
+
+                        itemList[i + 1].Attributes[0].InnerText = " ";
+                        itemList[i + 1].Attributes[1].InnerText = "0";
+                    }
+                    else
+                    {
+                        n.Attributes[0].InnerText = " ";
+                        n.Attributes[1].InnerText = "0";
+                    }
+                }
+
+                i++;
+            }
+
+            //save and close the player xml
+            doc.Save("Resources/Player.xml");
         }
         #endregion player xml update method
     }

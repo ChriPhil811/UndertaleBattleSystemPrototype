@@ -31,7 +31,7 @@ namespace UndertaleBattleSystemPrototype
         string name;
 
         //create an xml reader for the enemy file
-        XmlReader eReader = XmlReader.Create("file:///C:/Users/Chris/Source/Repos/ChriPhil811/UndertaleBattleSystemPrototype/UndertaleBattleSystemPrototype/Resources/TestEnemy.xml");
+        XmlReader eReader = XmlReader.Create("Resources/TestEnemy.xml");
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);

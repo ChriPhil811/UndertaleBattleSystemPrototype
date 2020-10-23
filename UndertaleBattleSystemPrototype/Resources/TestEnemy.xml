@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Enemy>
   <Stats>
-    <Attack>2</Attack>
+    <Attack>4</Attack>
     <Defence>0</Defence>
   </Stats>
   <ActMenu>

@@ -1,1 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<Enemy>
+  <Stats>
+    <Attack>2</Attack>
+    <Defence>0</Defence>
+  </Stats>
+  <ActMenu>
+    <Act actName ="Check"
+          actLine1 ="TESTENEMY 2 ATK 0 DEF"
+          actLine2 ="Basic enemy example">
+    </Act>
+    <Act actName ="Joke"
+          actLine1 ="Test Enemy laughs."
+          actLine2 ="..."
+          actLine3 ="It's fake laughter though.">
+    </Act>
+    <Act actName ="Taunt"
+          actLine1 ="Test Enemy just stares at you.">
+    </Act>
+    <Act actName = "Dance"
+          actLine1 = "Test Enemy doesn't like dancing."
+          actLine2 = "...but they make an exception this time.">
+    </Act>
+  </ActMenu>
+</Enemy>

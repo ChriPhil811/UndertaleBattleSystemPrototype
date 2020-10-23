@@ -5,9 +5,9 @@
     <Defence>0</Defence>
   </Stats>
   <ActMenu>
-    <Act actName ="Check" 
+    <Act actName ="Check"
           actLine1 ="TESTENEMY 2 ATK 0 DEF"
-          actLine2 ="Basic enemy example"> 
+          actLine2 ="Basic enemy example">
     </Act>
     <Act actName ="Joke"
           actLine1 ="Test Enemy laughs."

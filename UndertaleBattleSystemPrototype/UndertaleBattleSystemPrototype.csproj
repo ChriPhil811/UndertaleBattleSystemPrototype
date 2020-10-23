@@ -119,12 +119,12 @@
     <None Include="Resources\mercyButtonBlank.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TestEnemy.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Player.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TestEnemy.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

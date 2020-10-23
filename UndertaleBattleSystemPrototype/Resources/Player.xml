@@ -14,13 +14,13 @@
              armor =" ">
     </Equiped>
     <Inventory>
-      <Item name ="Test Item"
+      <Item name ="Test Item 1"
             heal ="10">
       </Item>
-      <Item name ="Test Item"
+      <Item name ="Test Item 2"
             heal ="5">
       </Item>
-      <Item name ="Test Item"
+      <Item name ="Test Item 3"
             heal ="20">
       </Item>
       <Item name =" "

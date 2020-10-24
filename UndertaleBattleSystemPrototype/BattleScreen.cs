@@ -28,15 +28,12 @@ namespace UndertaleBattleSystemPrototype
         //booleans for checking what menu the player is in
         Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
 
-        //integers for the player's current hp, attack, and defence (string for name as well)
-        int hp, atk, def;
-        string name;
-
         //create an xml reader for the enemy file and player file
         XmlReader eReader, pReader;
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
+        SolidBrush grayBrush = new SolidBrush(Color.Gray);
         SolidBrush redBrush = new SolidBrush(Color.Red);
         SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
 
@@ -44,10 +41,13 @@ namespace UndertaleBattleSystemPrototype
         Player player = new Player();
 
         //create a new image for the player sprite and button sprites
-        Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite;
+        Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite, fightUISprite;
 
         //create rectangles for buttons
         Rectangle fightRec, actRec, itemRec, mercyRec;
+
+        //rectangle for attacking UI
+        Rectangle attackRec;
 
         //health bar rectangles
         Rectangle maxHPRec = new Rectangle(410, 550, 80, 20);
@@ -75,29 +75,18 @@ namespace UndertaleBattleSystemPrototype
             Cursor.Hide();
 
             //set images
-            playerSprite = Properties.Resources.heart;
-            fightSprite = Properties.Resources.fightButton;
-            actSprite = Properties.Resources.actButton;
-            itemSprite = Properties.Resources.itemButton;
-            mercySprite = Properties.Resources.mercyButton;
+            playerSprite = Resources.heart;
+            fightSprite = Resources.fightButton;
+            actSprite = Resources.actButton;
+            itemSprite = Resources.itemButton;
+            mercySprite = Resources.mercyButton;
+            fightUISprite = Resources.fightUISprite;
         }
         #endregion battle system brought up
 
         #region setup
         public void OnStart()
         {
-            //fill in player details for battle use
-            pReader = XmlReader.Create("Resources/Player.xml");
-
-            pReader.ReadToFollowing("General");
-            name = pReader.GetAttribute("name");
-            pReader.ReadToFollowing("Battle");
-            hp = Convert.ToInt16(pReader.GetAttribute("currentHP"));
-            atk = Convert.ToInt16(pReader.GetAttribute("atk"));
-            def = Convert.ToInt16(pReader.GetAttribute("def"));
-
-            pReader.Close();
-
             //set button positions and sizes
             fightRec = new Rectangle(236 - 190, this.Height - 100, 140, 50);
             actRec = new Rectangle(472 - 190, this.Height - 100, 140, 50);
@@ -122,11 +111,26 @@ namespace UndertaleBattleSystemPrototype
             actLabel3.Text = "* " + actNames[2];
             actLabel4.Text = "* " + actNames[3];
 
-            //set the name label to the correct name
-            nameLabel.Text = name;
+            //fill in player details for battle use
+            pReader = XmlReader.Create("Resources/Player.xml");
 
-            //set player initial position (on fight button)
-            player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
+            pReader.ReadToFollowing("General");
+            player.name = pReader.GetAttribute("name");
+            pReader.ReadToFollowing("Battle");
+            player.hp = Convert.ToInt16(pReader.GetAttribute("currentHP"));
+            player.atk = Convert.ToInt16(pReader.GetAttribute("atk"));
+            player.def = Convert.ToInt16(pReader.GetAttribute("def"));
+
+            pReader.Close();
+
+            //fill in player start position
+            player.x = fightRec.X + 15;
+            player.y = fightRec.Y + 15;
+            player.size = 20;
+
+
+            //set the name label to the correct name
+            nameLabel.Text = player.name;
         }
         #endregion setup
 
@@ -224,6 +228,7 @@ namespace UndertaleBattleSystemPrototype
             //if player is in the buttons and menus...
             else
             {
+                if (fightMenuSelected == true) { FightUI(); }
                 if (actMenuSelected == true) { ActMenu(); }
                 if (itemMenuSelected == true) { ItemMenu(); }
                 if (mercyMenuSelected == true) { MercyMenu(); }
@@ -233,12 +238,27 @@ namespace UndertaleBattleSystemPrototype
                 #region fight
                 if (playerRec.IntersectsWith(fightRec))
                 {
-                    fightSprite = Properties.Resources.fightButtonBlank;
+                    fightSprite = Resources.fightButtonBlank;
 
-                    if(dDown == true)
+                    //go into the fight menu
+                    if (spaceDown == true)
                     {
-                        fightSprite = Properties.Resources.fightButton;
-                        player = new Player(actRec.X + 15, actRec.Y + 15, 20);
+                        //hide the text output box
+                        textOutput.Visible = false;
+
+                        //set boolean for fight menu check to true
+                        fightMenuSelected = true;
+
+                        //set the attackRec position for fighting
+                        attackRec = new Rectangle(50, 338, 15, 190);
+
+                        Thread.Sleep(150);
+                    }
+                    if (dDown == true)
+                    {
+                        fightSprite = Resources.fightButton;
+                        player.x = actRec.X + 15;
+                        player.y = actRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
@@ -248,23 +268,14 @@ namespace UndertaleBattleSystemPrototype
                 #region act
                 if (playerRec.IntersectsWith(actRec))
                 {
-                    actSprite = Properties.Resources.actButtonBlank;
+                    actSprite = Resources.actButtonBlank;
                     actMenuSelected = false;
 
                     //go into the act menu
                     if (spaceDown == true)
                     {
-                        //make the text output not visible
-                        textOutput.Visible = false;
-
-                        ///make the act labels visible
-                        actLabel1.Visible = true;
-                        actLabel2.Visible = true;
-                        actLabel3.Visible = true;
-                        actLabel4.Visible = true;
-
-                        //set player position to the act1 label
-                        player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+                        //set actions to be visible and put player in the action menu
+                        MenuDisplay();
 
                         //setup the act menu for the current enemy
                         ActMenuText();
@@ -276,15 +287,17 @@ namespace UndertaleBattleSystemPrototype
                     }
                     if (aDown == true)
                     {
-                        actSprite = Properties.Resources.actButton;
-                        player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
+                        actSprite = Resources.actButton;
+                        player.x = fightRec.X + 15;
+                        player.y = fightRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
                     if (dDown == true)
                     {
-                        actSprite = Properties.Resources.actButton;
-                        player = new Player(itemRec.X + 15, itemRec.Y + 15, 20);
+                        actSprite = Resources.actButton;
+                        player.x = itemRec.X + 15;
+                        player.y = itemRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
@@ -295,22 +308,13 @@ namespace UndertaleBattleSystemPrototype
                 #region item
                 if (playerRec.IntersectsWith(itemRec))
                 {
-                    itemSprite = Properties.Resources.itemButtonBlank;
+                    itemSprite = Resources.itemButtonBlank;
 
                     //go into the item menu
                     if (spaceDown == true)
                     {
-                        //make the text output not visible
-                        textOutput.Visible = false;
-
-                        ///make the act labels visible
-                        actLabel1.Visible = true;
-                        actLabel2.Visible = true;
-                        actLabel3.Visible = true;
-                        actLabel4.Visible = true;
-
-                        //set player position to the act1 label
-                        player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+                        //set actions to be visible and put player in the action menu
+                        MenuDisplay();
 
                         //setup the item menu for the current enemy
                         ItemMenuText();
@@ -322,15 +326,17 @@ namespace UndertaleBattleSystemPrototype
                     }
                     if (aDown == true)
                     {
-                        itemSprite = Properties.Resources.itemButton;
-                        player = new Player(actRec.X + 15, actRec.Y + 15, 20);
+                        itemSprite = Resources.itemButton;
+                        player.x = actRec.X + 15;
+                        player.y = actRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
                     if (dDown == true)
                     {
-                        itemSprite = Properties.Resources.itemButton;
-                        player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+                        itemSprite = Resources.itemButton;
+                        player.x = mercyRec.X + 15;
+                        player.y = mercyRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
@@ -340,21 +346,18 @@ namespace UndertaleBattleSystemPrototype
                 #region mercy
                 if (playerRec.IntersectsWith(mercyRec))
                 {
-                    mercySprite = Properties.Resources.mercyButtonBlank;
+                    mercySprite = Resources.mercyButtonBlank;
                     mercyMenuSelected = false;
 
                     //go into the mercy menu
                     if (spaceDown == true)
                     {
-                        //make the text output not visible
-                        textOutput.Visible = false;
+                        //set actions to be visible and put player in the action menu
+                        MenuDisplay();
 
-                        ///make the act labels visible
-                        actLabel1.Visible = true;
-                        actLabel2.Visible = true;
-
-                        //set player position to the act1 label
-                        player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+                        //The mercy menu should only have act labels 1 and 2 displaying, so these ensure that happens
+                        actLabel3.Visible = false;
+                        actLabel4.Visible = false;
 
                         //setup the act menu for the current enemy
                         MercyMenuText();
@@ -366,8 +369,9 @@ namespace UndertaleBattleSystemPrototype
                     }
                     if (aDown == true)
                     {
-                        mercySprite = Properties.Resources.mercyButton;
-                        player = new Player(itemRec.X + 15, itemRec.Y + 15, 20);
+                        mercySprite = Resources.mercyButton;
+                        player.x = itemRec.X + 15;
+                        player.y = itemRec.Y + 15;
 
                         Thread.Sleep(150);
                     }
@@ -378,8 +382,8 @@ namespace UndertaleBattleSystemPrototype
             #endregion buttons code
 
             //update the health bar and hp label depending on the player's hp
-            remainingHPRec.Width = hp * 2;
-            hpValueLabel.Text = hp + " / 40";
+            remainingHPRec.Width = player.hp * 2;
+            hpValueLabel.Text = player.hp + " / 40";
 
             Refresh();
         }
@@ -392,6 +396,13 @@ namespace UndertaleBattleSystemPrototype
             foreach(Rectangle r in arenaWalls)
             {
                 e.Graphics.FillRectangle(whiteBrush, r);
+            }
+
+            //draw the fight UI if the player is in the fight menu
+            if (fightMenuSelected == true)
+            {
+                e.Graphics.DrawImage(fightUISprite, arenaWalls[0].X + 5, arenaWalls[2].Y + 5, 838, 195);
+                e.Graphics.FillRectangle(grayBrush, attackRec);
             }
 
             //draw the buttons
@@ -411,6 +422,13 @@ namespace UndertaleBattleSystemPrototype
 
         #region menu methods
 
+        #region fight UI
+        private void FightUI()
+        {
+
+        }
+        #endregion fight UI
+
         #region act menu
         private void ActMenu()
         {
@@ -427,7 +445,8 @@ namespace UndertaleBattleSystemPrototype
                 actLabel4.Visible = false;
 
                 //set player back to the act button
-                player = new Player(actRec.X + 15, actRec.Y + 15, 20);
+                player.x = actRec.X + 15;
+                player.y = actRec.Y + 15;
 
                 //stop ActMenu() from being called when act menu is exited
                 actMenuSelected = false;
@@ -487,7 +506,8 @@ namespace UndertaleBattleSystemPrototype
                 actLabel4.Visible = false;
 
                 //set player back to the item button
-                player = new Player(itemRec.X + 15, itemRec.Y + 15, 20);
+                player.x = itemRec.X + 15;
+                player.y = itemRec.Y + 15;
 
                 //stop ItemMenu() from being called when item menu is exited
                 itemMenuSelected = false;
@@ -544,7 +564,8 @@ namespace UndertaleBattleSystemPrototype
                 actLabel2.Visible = false;
 
                 //set player back to the act button
-                player = new Player(mercyRec.X + 15, mercyRec.Y + 15, 20);
+                player.x = mercyRec.X + 15;
+                player.y = mercyRec.Y + 15;
 
                 //stop MercyMenu() from being called when mercy menu is exited
                 mercyMenuSelected = false;
@@ -585,20 +606,18 @@ namespace UndertaleBattleSystemPrototype
             {
                 actLabel1.Text = "  " + actNames[0];
 
-                //call the menu display method and go back to the fight button
+                //call the menu disappear method and go back to the fight button
                 if (spaceDown == true)
                 {
-                    MenuDisplay(0);
-
-                    player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
-
+                    MenuDisappear(0);
                     Thread.Sleep(150);
                 }
                 //move to option 3
                 if (sDown == true && actLabel3.Visible == true)
                 {
                     actLabel1.Text = "* " + actNames[0];
-                    player = new Player(actLabel3.Location.X, actLabel3.Location.Y + 5, 20);
+                    player.x = actLabel3.Location.X;
+                    player.y = actLabel3.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -606,7 +625,8 @@ namespace UndertaleBattleSystemPrototype
                 if (dDown == true && actLabel2.Visible == true)
                 {
                     actLabel1.Text = "* " + actNames[0];
-                    player = new Player(actLabel2.Location.X, actLabel2.Location.Y + 5, 20);
+                    player.x = actLabel2.Location.X;
+                    player.y = actLabel2.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -615,20 +635,18 @@ namespace UndertaleBattleSystemPrototype
             {
                 actLabel2.Text = "  " + actNames[1];
 
-                //call the menu display method and go back to the fight button
+                //call the menu disappear method and go back to the fight button
                 if (spaceDown == true)
                 {
-                    MenuDisplay(1);
-
-                    player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
-
+                    MenuDisappear(1);
                     Thread.Sleep(150);
                 }
                 //move to option 1
                 if (aDown == true && actLabel1.Visible == true)
                 {
                     actLabel2.Text = "* " + actNames[1];
-                    player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+                    player.x = actLabel1.Location.X;
+                    player.y = actLabel1.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -636,7 +654,8 @@ namespace UndertaleBattleSystemPrototype
                 if (sDown == true && actLabel4.Visible == true)
                 {
                     actLabel2.Text = "* " + actNames[1];
-                    player = new Player(actLabel4.Location.X, actLabel4.Location.Y + 5, 20);
+                    player.x = actLabel4.Location.X;
+                    player.y = actLabel4.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -645,20 +664,18 @@ namespace UndertaleBattleSystemPrototype
             {
                 actLabel3.Text = "  " + actNames[2];
 
-                //call the menu display method and go back to the fight button
+                //call the menu disappear method and go back to the fight button
                 if (spaceDown == true)
                 {
-                    MenuDisplay(2);
-
-                    player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
-
+                    MenuDisappear(2);
                     Thread.Sleep(150);
                 }
                 //move to option 1
                 if (wDown == true && actLabel1.Visible == true)
                 {
                     actLabel3.Text = "* " + actNames[2];
-                    player = new Player(actLabel1.Location.X, actLabel1.Location.Y + 5, 20);
+                    player.x = actLabel1.Location.X;
+                    player.y = actLabel1.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -666,7 +683,8 @@ namespace UndertaleBattleSystemPrototype
                 if (dDown == true && actLabel4.Visible == true)
                 {
                     actLabel3.Text = "* " + actNames[2];
-                    player = new Player(actLabel4.Location.X, actLabel4.Location.Y + 5, 20);
+                    player.x = actLabel4.Location.X;
+                    player.y = actLabel4.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -675,20 +693,18 @@ namespace UndertaleBattleSystemPrototype
             {
                 actLabel4.Text = "  " + actNames[3];
 
-                //call the menu display method and go back to the fight button
+                //call the menu disappear method and go back to the fight button
                 if (spaceDown == true)
                 {
-                    MenuDisplay(3);
-
-                    player = new Player(fightRec.X + 15, fightRec.Y + 15, 20);
-
+                    MenuDisappear(3);
                     Thread.Sleep(150);
                 }
                 //move to option 2
                 if (wDown == true && actLabel2.Visible == true)
                 {
                     actLabel4.Text = "* " + actNames[3];
-                    player = new Player(actLabel2.Location.X, actLabel2.Location.Y + 5, 20);
+                    player.x = actLabel2.Location.X;
+                    player.y = actLabel2.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -696,7 +712,8 @@ namespace UndertaleBattleSystemPrototype
                 if (aDown == true && actLabel3.Visible == true)
                 {
                     actLabel4.Text = "* " + actNames[3];
-                    player = new Player(actLabel3.Location.X, actLabel3.Location.Y + 5, 20);
+                    player.x = actLabel3.Location.X;
+                    player.y = actLabel3.Location.Y + 5;
 
                     Thread.Sleep(150);
                 }
@@ -704,8 +721,8 @@ namespace UndertaleBattleSystemPrototype
             #endregion option selection
         }
         #endregion general menu code
-        #region menu display code
-        private void MenuDisplay(int i)
+        #region menu disappear code
+        private void MenuDisappear(int i)
         {
             //set output text to the appropraite message and make it visible
             textOutput.Text = actText[i];
@@ -720,8 +737,8 @@ namespace UndertaleBattleSystemPrototype
             //add hp to player if item was used and remove the item
             if (itemMenuSelected == true)
             {
-                hp += itemHeals[i];
-                if(hp > 40) { hp = 40; }
+                player.hp += itemHeals[i];
+                if(player.hp > 40) { player.hp = 40; }
 
                 PlayerXmlUpdate(i);
             }
@@ -733,10 +750,31 @@ namespace UndertaleBattleSystemPrototype
             mercyMenuSelected = false;
 
             //set all buttons to their non-active state
-            fightSprite = Properties.Resources.fightButton;
-            actSprite = Properties.Resources.actButton;
-            itemSprite = Properties.Resources.itemButton;
-            mercySprite = Properties.Resources.mercyButton;
+            fightSprite = Resources.fightButton;
+            actSprite = Resources.actButton;
+            itemSprite = Resources.itemButton;
+            mercySprite = Resources.mercyButton;
+
+            //set player back to the fight button
+            player.x = fightRec.X + 15;
+            player.y = fightRec.Y + 15;
+        }
+        #endregion menu disappear code
+        #region menu display code
+        private void MenuDisplay()
+        {
+            //make the text output not visible
+            textOutput.Visible = false;
+
+            ///make the act labels visible
+            actLabel1.Visible = true;
+            actLabel2.Visible = true;
+            actLabel3.Visible = true;
+            actLabel4.Visible = true;
+
+            //set player position to the act1 label
+            player.x = actLabel1.Location.X;
+            player.y = actLabel1.Location.Y + 5;
         }
         #endregion menu display code
 

@@ -126,5 +126,8 @@
   <ItemGroup>
     <None Include="Resources\TestEnemy.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fightUISprite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

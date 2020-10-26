@@ -19,26 +19,35 @@ namespace UndertaleBattleSystemPrototype
     {
         #region variables and lists
 
+        //int for pause counting
+        int afterTurnCounter = 0;
+
         //player key press variables
         Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
 
-        //boolean for checking if player is in the fighting area or not
-        Boolean isFighting = false;
+        //boolean for checking if it's the enemy's turn or not
+        Boolean enemyTurn = false;
 
         //booleans for checking what menu the player is in
         Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
+
+        //boolean for checking if the player has made an attack
+        Boolean playerAttack = false;
 
         //create an xml reader for the enemy file and player file
         XmlReader eReader, pReader;
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
-        SolidBrush grayBrush = new SolidBrush(Color.Gray);
+        SolidBrush grayBrush = new SolidBrush(Color.Indigo);
         SolidBrush redBrush = new SolidBrush(Color.Red);
         SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
 
         //create the player
         Player player = new Player();
+
+        //create the enemy
+        Enemy enemy = new Enemy();
 
         //create a new image for the player sprite and button sprites
         Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite, fightUISprite;
@@ -52,6 +61,11 @@ namespace UndertaleBattleSystemPrototype
         //health bar rectangles
         Rectangle maxHPRec = new Rectangle(410, 550, 80, 20);
         Rectangle remainingHPRec = new Rectangle(410, 550, 80, 20);
+        Rectangle enemyMaxHPRec = new Rectangle(372, 50, 200, 20);
+        Rectangle enemyRemainingHPRec = new Rectangle(372, 50, 200, 20);
+
+        //random number gen
+        Random randNum = new Random();
 
         //new list for battle area walls
         List<Rectangle> arenaWalls = new List<Rectangle>();
@@ -110,6 +124,16 @@ namespace UndertaleBattleSystemPrototype
             actLabel2.Text = "* " + actNames[1];
             actLabel3.Text = "* " + actNames[2];
             actLabel4.Text = "* " + actNames[3];
+
+            //fill in enemy details for battle use
+            eReader = XmlReader.Create("Resources/TestEnemy.xml");
+
+            eReader.ReadToFollowing("Stats");
+            enemy.hp = Convert.ToInt16(eReader.GetAttribute("hp"));
+            enemy.atk = Convert.ToInt16(eReader.GetAttribute("atk"));
+            enemy.def = Convert.ToInt16(eReader.GetAttribute("def"));
+
+            eReader.Close();
 
             //fill in player details for battle use
             pReader = XmlReader.Create("Resources/Player.xml");
@@ -197,8 +221,8 @@ namespace UndertaleBattleSystemPrototype
 
             #region fighting area code
 
-            //if player is in the fighting area...
-            if (isFighting == true)
+            //if it is the enemy's turn...
+            if (enemyTurn == true)
             {
                 #region player movement
                 //player movement
@@ -385,6 +409,9 @@ namespace UndertaleBattleSystemPrototype
             remainingHPRec.Width = player.hp * 2;
             hpValueLabel.Text = player.hp + " / 40";
 
+            //update the enemy's health bar depending on the enemey's hp
+            enemyRemainingHPRec.Width = enemy.hp * 2;
+
             Refresh();
         }
         #endregion movement, collisions, and menus (gameloop)
@@ -403,6 +430,24 @@ namespace UndertaleBattleSystemPrototype
             {
                 e.Graphics.DrawImage(fightUISprite, arenaWalls[0].X + 5, arenaWalls[2].Y + 5, 838, 195);
                 e.Graphics.FillRectangle(grayBrush, attackRec);
+            }
+
+            //draw the enemy health bar if the player has attacked, then pause before going to enemy turn
+            if (playerAttack == true)
+            {
+                e.Graphics.FillRectangle(redBrush, enemyMaxHPRec);
+                e.Graphics.FillRectangle(yellowBrush, enemyRemainingHPRec);
+
+                afterTurnCounter++;
+
+                //if 2 seconds have passed then hide the enemy health bar, set the enemy turn boolean to true, and reset the after turn counter
+                if (afterTurnCounter >= 100)
+                {
+                    playerAttack = false;
+                    enemyTurn = true;
+
+                    afterTurnCounter = 0;
+                }
             }
 
             //draw the buttons
@@ -425,7 +470,42 @@ namespace UndertaleBattleSystemPrototype
         #region fight UI
         private void FightUI()
         {
+            //if the player presses space, check where the attack rec is and do a damage calulation accordingly
+            if (spaceDown == true)
+            {
+                //int for the center of the attack rec and the damage number for doing damage to the enemy
+                int atkCenter = attackRec.X + attackRec.Width / 2;
+                int damageNum = 0;
 
+                //if attack is in the red areas of the fight UI do damage accordingly
+                if (atkCenter > 50 && atkCenter < 300 || atkCenter > 638 && atkCenter < 888) 
+                {
+                    damageNum = randNum.Next(player.atk, player.atk * 2);
+                }
+                //if attack is in the yellow areas of the fight UI do damage accordingly
+                if (atkCenter > 300 && atkCenter < 450 || atkCenter > 488 && atkCenter < 638) 
+                {
+                    damageNum = 2 * (randNum.Next(player.atk, player.atk * 2));
+                }
+                //if attack is in the green area of the fight UI do damage accordingly
+                if (atkCenter > 450 && atkCenter < 488) 
+                {
+                    damageNum = 3 * (randNum.Next(player.atk, player.atk * 2));
+                }
+
+                //subtract the damage number from the enemy's hp
+                enemy.hp -= damageNum;
+
+                //set player attack boolean to true for drawing the enemy health bar
+                //also set the fightMenuSelected and spaceDown boolean to false so no fight UI reappears
+                playerAttack = true;
+                fightMenuSelected = false;
+                spaceDown = false;
+            }
+            else
+            {
+                attackRec.X += 20;
+            }
         }
         #endregion fight UI
 

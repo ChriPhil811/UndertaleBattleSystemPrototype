@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Enemy>
-  <Stats>
-    <Health>100</Health>
-    <Attack>5</Attack>
-    <Defence>5</Defence>
+  <Stats hp ="100"
+         atk ="5"
+         def ="5">
   </Stats>
   <ActMenu>
     <Act actName ="Check"

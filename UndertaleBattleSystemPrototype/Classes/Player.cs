@@ -10,13 +10,12 @@ namespace UndertaleBattleSystemPrototype
     {
 
         public int x, y, size, hp, atk, def;
-        public string name;
 
         public Player()
         {
         }
 
-        public Player(int _x, int _y, int _size, int _hp, int _atk, int _def, string _name)
+        public Player(int _x, int _y, int _size, int _hp, int _atk, int _def)
         {
             x = _x;
             y = _y;
@@ -24,7 +23,6 @@ namespace UndertaleBattleSystemPrototype
             hp = _hp;
             atk = _atk;
             def = _def;
-            name = _name;
         }
 
         public void MoveUpDown(int speed)

@@ -38,6 +38,9 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.hpLabel = new System.Windows.Forms.Label();
             this.hpValueLabel = new System.Windows.Forms.Label();
+
+            this.damageLabel = new System.Windows.Forms.Label();
+
             this.SuspendLayout();
             // 
             // gameTimer
@@ -125,9 +128,10 @@
             this.nameLabel.ForeColor = System.Drawing.Color.White;
             this.nameLabel.Location = new System.Drawing.Point(40, 545);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(62, 28);
+            this.nameLabel.Size = new System.Drawing.Size(60, 28);
             this.nameLabel.TabIndex = 5;
-            this.nameLabel.Text = "NAME";
+            this.nameLabel.Text = "Nori";
+
             // 
             // hpLabel
             // 
@@ -154,12 +158,27 @@
             this.hpValueLabel.Size = new System.Drawing.Size(82, 28);
             this.hpValueLabel.TabIndex = 8;
             this.hpValueLabel.Text = "40 / 40";
+            //
+            // damageLabel
+            // 
+            this.damageLabel.BackColor = System.Drawing.Color.Transparent;
+            this.damageLabel.Enabled = false;
+            this.damageLabel.Font = new System.Drawing.Font("Determination Sans Web", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.damageLabel.ForeColor = System.Drawing.Color.Yellow;
+            this.damageLabel.Location = new System.Drawing.Point(422, 100);
+            this.damageLabel.Name = "damageLabel";
+            this.damageLabel.Size = new System.Drawing.Size(100, 28);
+            this.damageLabel.TabIndex = 9;
+            this.damageLabel.Text = "0";
+            this.damageLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.damageLabel.Visible = false;
             // 
             // BattleScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.damageLabel);
             this.Controls.Add(this.hpValueLabel);
             this.Controls.Add(this.hpLabel);
             this.Controls.Add(this.nameLabel);
@@ -190,5 +209,6 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label hpLabel;
         private System.Windows.Forms.Label hpValueLabel;
+        private System.Windows.Forms.Label damageLabel;
     }
 }

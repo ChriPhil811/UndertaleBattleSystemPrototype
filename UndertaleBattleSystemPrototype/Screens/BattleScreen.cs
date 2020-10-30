@@ -22,23 +22,36 @@ namespace UndertaleBattleSystemPrototype
         //player key press variables
         Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
 
-        //boolean for checking if player is in the fighting area or not
-        Boolean isFighting = false;
+        //int for after turn counting and enemy turn counting
+        int afterTurnCounter = 0;
+        int enemyTurnCounter = 500;
+
+        //string for damage number drawing
+        string playerDamageNum;
+
+        //boolean for checking if it's the enemy's turn or not
+        Boolean enemyTurn = false;
 
         //booleans for checking what menu the player is in
         Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
+
+        //boolean for checking if the player has made an attack
+        Boolean playerAttack = false;
 
         //create an xml reader for the enemy file and player file
         XmlReader eReader, pReader;
 
         //brush for walls, hp bar, and projectiles
         SolidBrush whiteBrush = new SolidBrush(Color.White);
-        SolidBrush grayBrush = new SolidBrush(Color.Gray);
+        SolidBrush grayBrush = new SolidBrush(Color.Indigo);
         SolidBrush redBrush = new SolidBrush(Color.Red);
         SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
 
         //create the player
         Player player = new Player();
+
+        //create the enemy
+        Enemy enemy = new Enemy();
 
         //create a new image for the player sprite and button sprites
         Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite, fightUISprite;
@@ -49,9 +62,17 @@ namespace UndertaleBattleSystemPrototype
         //rectangle for attacking UI
         Rectangle attackRec;
 
+        //create a rectangle for player collision
+        Rectangle playerRec;
+
         //health bar rectangles
         Rectangle maxHPRec = new Rectangle(410, 550, 80, 20);
         Rectangle remainingHPRec = new Rectangle(410, 550, 80, 20);
+        Rectangle enemyMaxHPRec = new Rectangle(372, 50, 200, 20);
+        Rectangle enemyRemainingHPRec = new Rectangle(372, 50, 200, 20);
+
+        //random number gen
+        Random randNum = new Random();
 
         //new list for battle area walls
         List<Rectangle> arenaWalls = new List<Rectangle>();
@@ -111,11 +132,19 @@ namespace UndertaleBattleSystemPrototype
             actLabel3.Text = "* " + actNames[2];
             actLabel4.Text = "* " + actNames[3];
 
+            //fill in enemy details for battle use
+            eReader = XmlReader.Create("Resources/TestEnemy.xml");
+
+            eReader.ReadToFollowing("Stats");
+            enemy.hp = Convert.ToInt16(eReader.GetAttribute("hp"));
+            enemy.atk = Convert.ToInt16(eReader.GetAttribute("atk"));
+            enemy.def = Convert.ToInt16(eReader.GetAttribute("def"));
+
+            eReader.Close();
+
             //fill in player details for battle use
             pReader = XmlReader.Create("Resources/Player.xml");
 
-            pReader.ReadToFollowing("General");
-            player.name = pReader.GetAttribute("name");
             pReader.ReadToFollowing("Battle");
             player.hp = Convert.ToInt16(pReader.GetAttribute("currentHP"));
             player.atk = Convert.ToInt16(pReader.GetAttribute("atk"));
@@ -127,10 +156,6 @@ namespace UndertaleBattleSystemPrototype
             player.x = fightRec.X + 15;
             player.y = fightRec.Y + 15;
             player.size = 20;
-
-
-            //set the name label to the correct name
-            nameLabel.Text = player.name;
         }
         #endregion setup
 
@@ -193,34 +218,64 @@ namespace UndertaleBattleSystemPrototype
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             //update the position of the player collision
-            Rectangle playerRec = new Rectangle(player.x, player.y, player.size, player.size);
+            playerRec = new Rectangle(player.x, player.y, player.size, player.size);
 
             #region fighting area code
 
-            //if player is in the fighting area...
-            if (isFighting == true)
+            //if it is the enemy's turn...
+            if (enemyTurn == true && enemyTurnCounter > 0)
             {
+                enemyTurnCounter--;
+
                 #region player movement
                 //player movement
-                if (dDown == true && player.x < this.Width - player.size)
+                if (dDown == true && player.x < arenaWalls[1].X - arenaWalls[1].Width - player.size)
                 {
                     player.MoveLeftRight(5);
                 }
-                if (aDown == true && player.x > 0)
+                if (aDown == true && player.x > arenaWalls[0].X + arenaWalls[0].Width)
                 {
                     player.MoveLeftRight(-5);
                 }
-                if (wDown == true && player.y > 0)
+                if (wDown == true && player.y > arenaWalls[2].Y + arenaWalls[2].Height)
                 {
                     player.MoveUpDown(-5);
                 }
-                if (sDown == true && player.y < this.Height - player.size)
+                if (sDown == true && player.y < arenaWalls[3].Y - arenaWalls[3].Height - player.size)
                 {
                     player.MoveUpDown(5);
                 }
                 #endregion player movement
             }
+            
+            //if the enemy turn is over
+            #region enemy turn over
 
+            else if (enemyTurn == true && enemyTurnCounter <= 0)
+            {
+                //reset the enemy turn counter
+                enemyTurnCounter = 500;
+                enemyTurn = false;
+
+                //reset the arena walls
+                Rectangle leftWall = new Rectangle(fightRec.X, fightRec.Y - 250, 5, 200);
+                Rectangle rightWall = new Rectangle(mercyRec.X + 135, mercyRec.Y - 250, 5, 200);
+                Rectangle topWall = new Rectangle(fightRec.X, fightRec.Y - 250, 848, 5);
+                Rectangle bottomWall = new Rectangle(fightRec.X, fightRec.Y - 50, 848, 5);
+
+                //add the walls to the arena walls list
+                arenaWalls.Clear();
+                arenaWalls.Add(leftWall);
+                arenaWalls.Add(rightWall);
+                arenaWalls.Add(topWall);
+                arenaWalls.Add(bottomWall);
+
+                //set the player on the fight button
+                player.x = fightRec.X + 15;
+                player.y = fightRec.Y + 15;
+            }
+
+            #endregion enemy turn over
             #endregion fighting area code
 
             #region buttons code
@@ -251,6 +306,10 @@ namespace UndertaleBattleSystemPrototype
 
                         //set the attackRec position for fighting
                         attackRec = new Rectangle(50, 338, 15, 190);
+
+                        //move the player off-screen during player attack
+                        player.x = -20;
+                        player.y = -20;
 
                         Thread.Sleep(150);
                     }
@@ -385,6 +444,9 @@ namespace UndertaleBattleSystemPrototype
             remainingHPRec.Width = player.hp * 2;
             hpValueLabel.Text = player.hp + " / 40";
 
+            //update the enemy's health bar depending on the enemey's hp
+            enemyRemainingHPRec.Width = enemy.hp * 2;
+
             Refresh();
         }
         #endregion movement, collisions, and menus (gameloop)
@@ -403,6 +465,30 @@ namespace UndertaleBattleSystemPrototype
             {
                 e.Graphics.DrawImage(fightUISprite, arenaWalls[0].X + 5, arenaWalls[2].Y + 5, 838, 195);
                 e.Graphics.FillRectangle(grayBrush, attackRec);
+            }
+
+            //draw the enemy health bar and damage if the player has attacked, then pause before going to enemy turn
+            if (playerAttack == true)
+            {
+                e.Graphics.FillRectangle(redBrush, enemyMaxHPRec);
+                e.Graphics.FillRectangle(yellowBrush, enemyRemainingHPRec);
+
+                damageLabel.Visible = true;
+                damageLabel.Text = playerDamageNum;
+
+                afterTurnCounter++;
+
+                //if 2 seconds have passed then hide the enemy health bar and reset the after turn counter
+                if (afterTurnCounter >= 100)
+                {
+                    playerAttack = false;
+                    damageLabel.Visible = false;
+
+                    //call the turn made method
+                    TurnMade();
+
+                    afterTurnCounter = 0;
+                }
             }
 
             //draw the buttons
@@ -425,7 +511,55 @@ namespace UndertaleBattleSystemPrototype
         #region fight UI
         private void FightUI()
         {
+            //if the player presses space, check where the attack rec is and do a damage calulation accordingly
+            if (spaceDown == true)
+            {
+                //int for the center of the attack rec and the damage number for doing damage to the enemy
+                int atkCenter = attackRec.X + attackRec.Width / 2;
+                int damageNum = 0;
 
+                //if attack is in the red areas of the fight UI do damage accordingly
+                if (atkCenter > 50 && atkCenter < 300 || atkCenter > 638 && atkCenter < 888) 
+                {
+                    damageNum = randNum.Next(player.atk, player.atk * 2);
+                }
+                //if attack is in the yellow areas of the fight UI do damage accordingly
+                if (atkCenter > 300 && atkCenter < 450 || atkCenter > 488 && atkCenter < 638) 
+                {
+                    damageNum = 2 * (randNum.Next(player.atk, player.atk * 2));
+                }
+                //if attack is in the green area of the fight UI do damage accordingly
+                if (atkCenter > 450 && atkCenter < 488) 
+                {
+                    damageNum = 3 * (randNum.Next(player.atk, player.atk * 2));
+                }
+
+                //subtract the damage number from the enemy's hp
+                enemy.hp -= damageNum;
+
+                //set the player damage number string to the damage dealt for drawing
+                playerDamageNum = Convert.ToString(damageNum);
+
+                //set player attack boolean to true for drawing the enemy health bar and damage
+                //also set the fightMenuSelected and spaceDown boolean to false so no fight UI reappears
+                playerAttack = true;
+                fightMenuSelected = false;
+                spaceDown = false;
+            }
+            else if (attackRec.X > 888)
+            {
+                //set the player damage number string to "miss" for drawing
+                playerDamageNum = "MISS";
+
+                //set player attack boolean to true for drawing the enemy health bar and damage
+                //also set the fightMenuSelected and false so no fight UI reappears
+                playerAttack = true;
+                fightMenuSelected = false;
+            }
+            else
+            {
+                attackRec.X += 20;
+            }
         }
         #endregion fight UI
 
@@ -610,7 +744,6 @@ namespace UndertaleBattleSystemPrototype
                 if (spaceDown == true)
                 {
                     MenuDisappear(0);
-                    Thread.Sleep(150);
                 }
                 //move to option 3
                 if (sDown == true && actLabel3.Visible == true)
@@ -639,7 +772,6 @@ namespace UndertaleBattleSystemPrototype
                 if (spaceDown == true)
                 {
                     MenuDisappear(1);
-                    Thread.Sleep(150);
                 }
                 //move to option 1
                 if (aDown == true && actLabel1.Visible == true)
@@ -668,7 +800,6 @@ namespace UndertaleBattleSystemPrototype
                 if (spaceDown == true)
                 {
                     MenuDisappear(2);
-                    Thread.Sleep(150);
                 }
                 //move to option 1
                 if (wDown == true && actLabel1.Visible == true)
@@ -697,7 +828,6 @@ namespace UndertaleBattleSystemPrototype
                 if (spaceDown == true)
                 {
                     MenuDisappear(3);
-                    Thread.Sleep(150);
                 }
                 //move to option 2
                 if (wDown == true && actLabel2.Visible == true)
@@ -738,16 +868,10 @@ namespace UndertaleBattleSystemPrototype
             if (itemMenuSelected == true)
             {
                 player.hp += itemHeals[i];
-                if(player.hp > 40) { player.hp = 40; }
+                if (player.hp > 40) { player.hp = 40; }
 
                 PlayerXmlUpdate(i);
             }
-
-            //make sure menu methods don't continue to be called when not in a menu
-            fightMenuSelected = false;
-            actMenuSelected = false;
-            itemMenuSelected = false;
-            mercyMenuSelected = false;
 
             //set all buttons to their non-active state
             fightSprite = Resources.fightButton;
@@ -755,9 +879,8 @@ namespace UndertaleBattleSystemPrototype
             itemSprite = Resources.itemButton;
             mercySprite = Resources.mercyButton;
 
-            //set player back to the fight button
-            player.x = fightRec.X + 15;
-            player.y = fightRec.Y + 15;
+            //call the turn made method
+            TurnMade();
         }
         #endregion menu disappear code
         #region menu display code
@@ -777,6 +900,44 @@ namespace UndertaleBattleSystemPrototype
             player.y = actLabel1.Location.Y + 5;
         }
         #endregion menu display code
+        #region turn made code (going into the enemy turn)
+        private void TurnMade()
+        {
+            //make the player disappear
+            player.x = -20;
+            player.y = -20;
+
+            //wait for 4 seconds before starting the enemy turn if an act was made (so that the player can read lol)
+            if (textOutput.Visible == true)
+            {
+                Refresh();
+                Thread.Sleep(4000);
+            }
+
+            //make the main output label invisible
+            textOutput.Visible = false;
+
+            //set enemy turn boolean to true
+            enemyTurn = true;
+
+            //set the player in the middle of the battle area
+            player.x = 462;
+            player.y = 400;
+
+            //resize the arena area
+            Rectangle leftWall = new Rectangle(actRec.X, actRec.Y - 250, 5, 200);
+            Rectangle rightWall = new Rectangle(itemRec.X + 135, itemRec.Y - 250, 5, 200);
+            Rectangle topWall = new Rectangle(actRec.X, actRec.Y - 250, 376, 5);
+            Rectangle bottomWall = new Rectangle(actRec.X, actRec.Y - 50, 376, 5);
+
+            //add the new walls to the arena walls list
+            arenaWalls.Clear();
+            arenaWalls.Add(leftWall);
+            arenaWalls.Add(rightWall);
+            arenaWalls.Add(topWall);
+            arenaWalls.Add(bottomWall);
+        }
+        #endregion turn made code (going into the enemy turn)
 
         #endregion menu methods
 

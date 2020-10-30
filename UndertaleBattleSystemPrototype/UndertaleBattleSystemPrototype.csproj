@@ -93,9 +93,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\heart.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\actButton.png" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fightUISprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

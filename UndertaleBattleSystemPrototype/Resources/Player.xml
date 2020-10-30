@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Player>
   <Stats>
-    <General name ="NORI"
-             gold ="0">
+    <General gold ="0">
     </General>
     <Battle currentHP ="40"
             atk ="5"

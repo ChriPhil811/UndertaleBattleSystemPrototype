@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BattleScreen.cs">
+    <Compile Include="Screens\BattleScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BattleScreen.Designer.cs">
+    <Compile Include="Screens\BattleScreen.Designer.cs">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Enemy.cs" />
@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="BattleScreen.resx">
+    <EmbeddedResource Include="Screens\BattleScreen.resx">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">

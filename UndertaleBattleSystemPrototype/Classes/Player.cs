@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UndertaleBattleSystemPrototype.Classes
+namespace UndertaleBattleSystemPrototype
 {
     class Player
     {
+
         public int x, y, size, hp, atk, def;
         public string name;
 

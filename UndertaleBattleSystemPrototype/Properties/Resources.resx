@@ -148,6 +148,42 @@
   <data name="mercyButtonBlank" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mercyButtonBlank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="noriB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriB1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriB2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriB2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriBR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriBR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriF1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriF1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriF2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriF2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriFR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriFR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriL1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriL1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriL2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriL2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriLR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriLR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriR1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriR1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriR2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriR2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noriRR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noriRR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Player.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

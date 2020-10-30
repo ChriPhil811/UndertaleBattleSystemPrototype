@@ -19,15 +19,15 @@ namespace UndertaleBattleSystemPrototype
     {
         #region variables and lists
 
+        //player key press variables
+        Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
+
         //int for after turn counting and enemy turn counting
         int afterTurnCounter = 0;
         int enemyTurnCounter = 500;
 
         //string for damage number drawing
         string playerDamageNum;
-
-        //player key press variables
-        Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
 
         //boolean for checking if it's the enemy's turn or not
         Boolean enemyTurn = false;
@@ -247,7 +247,7 @@ namespace UndertaleBattleSystemPrototype
                 }
                 #endregion player movement
             }
-
+            
             //if the enemy turn is over
             #region enemy turn over
 
@@ -276,7 +276,6 @@ namespace UndertaleBattleSystemPrototype
             }
 
             #endregion enemy turn over
-
             #endregion fighting area code
 
             #region buttons code

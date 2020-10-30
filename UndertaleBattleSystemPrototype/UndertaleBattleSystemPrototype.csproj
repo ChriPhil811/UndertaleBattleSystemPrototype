@@ -46,6 +46,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Screens\LibraryScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\LibraryScreen.Designer.cs">
+      <DependentUpon>LibraryScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\LoseScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\LoseScreen.Designer.cs">
+      <DependentUpon>LoseScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ControlsScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\ControlsScreen.Designer.cs">
+      <DependentUpon>ControlsScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\MenuScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\MenuScreen.Designer.cs">
+      <DependentUpon>MenuScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Screens\BattleScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -63,6 +87,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\WinScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\WinScreen.Designer.cs">
+      <DependentUpon>WinScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ShopScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\ShopScreen.Designer.cs">
+      <DependentUpon>ShopScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\TownScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\TownScreen.Designer.cs">
+      <DependentUpon>TownScreen.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Screens\BattleScreen.resx">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,6 +121,27 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Screens\ControlsScreen.resx">
+      <DependentUpon>ControlsScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\LibraryScreen.resx">
+      <DependentUpon>LibraryScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\LoseScreen.resx">
+      <DependentUpon>LoseScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\MenuScreen.resx">
+      <DependentUpon>MenuScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\ShopScreen.resx">
+      <DependentUpon>ShopScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\TownScreen.resx">
+      <DependentUpon>TownScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\WinScreen.resx">
+      <DependentUpon>WinScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -126,6 +189,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fightUISprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriB1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriBR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriF1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriF2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriFR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriL1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriL2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriLR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriR1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriR2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriRR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noriB2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\heart.png" />

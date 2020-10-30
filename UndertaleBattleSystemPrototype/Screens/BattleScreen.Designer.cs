@@ -38,7 +38,9 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.hpLabel = new System.Windows.Forms.Label();
             this.hpValueLabel = new System.Windows.Forms.Label();
+
             this.damageLabel = new System.Windows.Forms.Label();
+
             this.SuspendLayout();
             // 
             // gameTimer
@@ -129,6 +131,7 @@
             this.nameLabel.Size = new System.Drawing.Size(60, 28);
             this.nameLabel.TabIndex = 5;
             this.nameLabel.Text = "Nori";
+
             // 
             // hpLabel
             // 
@@ -155,7 +158,7 @@
             this.hpValueLabel.Size = new System.Drawing.Size(82, 28);
             this.hpValueLabel.TabIndex = 8;
             this.hpValueLabel.Text = "40 / 40";
-            // 
+            //
             // damageLabel
             // 
             this.damageLabel.BackColor = System.Drawing.Color.Transparent;

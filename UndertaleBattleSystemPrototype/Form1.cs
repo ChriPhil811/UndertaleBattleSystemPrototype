@@ -19,12 +19,15 @@ namespace UndertaleBattleSystemPrototype
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //bring up the battle screen
-            BattleScreen bs = new BattleScreen();
-            this.Controls.Add(bs);
+            ////bring up the battle screen
+            //BattleScreen bs = new BattleScreen();
+            //this.Controls.Add(bs);
 
-            //focus on the battle system for user input
-            bs.Focus();
+            ////focus on the battle system for user input
+            //bs.Focus();
+            TownScreen ts = new TownScreen();
+            this.Controls.Add(ts);
+            ts.Focus();
         }
     }
 }

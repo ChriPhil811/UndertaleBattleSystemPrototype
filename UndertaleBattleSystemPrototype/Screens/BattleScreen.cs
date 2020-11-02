@@ -19,6 +19,9 @@ namespace UndertaleBattleSystemPrototype
     {
         #region variables and lists
 
+        //make a globally useable spare variable
+        public static Boolean canSpare = false;
+
         //player key press variables
         Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
 
@@ -26,14 +29,17 @@ namespace UndertaleBattleSystemPrototype
         int afterTurnCounter = 0;
         int enemyTurnCounter = 500;
 
+        //int for sparing
+        int spareNum = -1;
+
         //string for damage number drawing
         string playerDamageNum;
 
-        //boolean for checking if it's the enemy's turn or not
+        //boolean for checking if it's the enemy's turn or not 
         Boolean enemyTurn = false;
 
         //booleans for checking what menu the player is in
-        Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false, mercyMenuSelected = false;
+        Boolean fightMenuSelected = false, actMenuSelected = false, itemMenuSelected = false;
 
         //boolean for checking if the player has made an attack
         Boolean playerAttack = false;
@@ -77,9 +83,10 @@ namespace UndertaleBattleSystemPrototype
         //new list for battle area walls
         List<Rectangle> arenaWalls = new List<Rectangle>();
 
-        //lists for act string variables
+        //lists for acting
         List<string> actNames = new List<string>() {" ", " ", " ", " "};
         List<string> actText = new List<string>() {" ", " ", " ", " "};
+        List<int> spareValues = new List<int>() {0, 0, 0, 0};
         List<int> itemHeals = new List<int>() {0, 0, 0, 0};
 
         #endregion variables and lists
@@ -286,7 +293,6 @@ namespace UndertaleBattleSystemPrototype
                 if (fightMenuSelected == true) { FightUI(); }
                 if (actMenuSelected == true) { ActMenu(); }
                 if (itemMenuSelected == true) { ItemMenu(); }
-                if (mercyMenuSelected == true) { MercyMenu(); }
 
                 //check which button the player is currently on and set it to the blank version of the button's sprite
                 //if player moves to a different button, change button sprite back and set player position to the new button
@@ -368,6 +374,7 @@ namespace UndertaleBattleSystemPrototype
                 if (playerRec.IntersectsWith(itemRec))
                 {
                     itemSprite = Resources.itemButtonBlank;
+                    itemMenuSelected = false;
 
                     //go into the item menu
                     if (spaceDown == true)
@@ -405,30 +412,43 @@ namespace UndertaleBattleSystemPrototype
                 #region mercy
                 if (playerRec.IntersectsWith(mercyRec))
                 {
-                    mercySprite = Resources.mercyButtonBlank;
-                    mercyMenuSelected = false;
+                    //check if the enemy is spare-able and set the button sprite accordingly
+                    if (canSpare == true) { mercySprite = Resources.mercyButtonSpareBlank; }
+                    else { mercySprite = Resources.mercyButtonBlank; }
 
                     //go into the mercy menu
                     if (spaceDown == true)
                     {
-                        //set actions to be visible and put player in the action menu
-                        MenuDisplay();
+                        //check if the enemy is spare-able or not
+                        if (canSpare == false)
+                        {
+                            //set the action result
+                            actText[0] = "* You showed mercy." + "\n\n* ...";
 
-                        //The mercy menu should only have act labels 1 and 2 displaying, so these ensure that happens
-                        actLabel3.Visible = false;
-                        actLabel4.Visible = false;
+                            //call the menu disappear method
+                            MenuDisappear(-1);
+                        }
+                        else
+                        {
+                            //set the action result to show that the player won
+                            actText[0] = "* You Won!";
 
-                        //setup the act menu for the current enemy
-                        MercyMenuText();
+                            //call the menu disappear method
+                            MenuDisappear(0);
 
-                        //set boolean for mercy menu check to true
-                        mercyMenuSelected = true;
-
-                        Thread.Sleep(150);
+                            //go back to the town screen
+                            TownScreen ts = new TownScreen();
+                            Form form = this.FindForm();
+                            form.Controls.Add(ts);
+                            form.Controls.Remove(this);
+                            ts.Focus();
+                        }
                     }
                     if (aDown == true)
                     {
-                        mercySprite = Resources.mercyButton;
+                        if (canSpare == true) { mercySprite = Resources.mercyButtonSpare; }
+                        else { mercySprite = Resources.mercyButton; }
+
                         player.x = itemRec.X + 15;
                         player.y = itemRec.Y + 15;
 
@@ -603,12 +623,15 @@ namespace UndertaleBattleSystemPrototype
 
             while (eReader.Read() && i < 4)
             {
-                //read to the next action in the enemy xml file
-                eReader.ReadToFollowing("Act");
+                //check what step of sparing the player is on 
+                //(0 is spare-able, -1 is a negative action, 1 to infinity is a step forward/neutral action)
+                if (spareNum == 0 || spareNum == -1) { eReader.ReadToFollowing("Act"); }
+                if (spareNum == 1) { eReader.ReadToFollowing("Act1"); }
 
                 //fill out the proper details for each act option
-                actNames[i] = Convert.ToString(eReader.GetAttribute("actName"));
-                actText[i] = "* " + Convert.ToString(eReader.GetAttribute("actLine1")) + "\n\n* " + Convert.ToString(eReader.GetAttribute("actLine2")) + "\n\n* " + Convert.ToString(eReader.GetAttribute("actLine3"));
+                spareValues[i] = Convert.ToInt16(eReader.GetAttribute("spareValue"));
+                actNames[i] = eReader.GetAttribute("actName");
+                actText[i] = "* " + eReader.GetAttribute("actLine1") + "\n\n* " + eReader.GetAttribute("actLine2") + "\n\n* " + eReader.GetAttribute("actLine3");
 
                 //add 1 to the counter
                 i++;
@@ -683,48 +706,6 @@ namespace UndertaleBattleSystemPrototype
             actLabel4.Text = "* " + actNames[3];
         }
         #endregion item menu text
-
-        #region mercy menu
-        private void MercyMenu()
-        {
-            //if for player exiting the act menu
-            if (shiftDown == true)
-            {
-                //show the main text output
-                textOutput.Visible = true;
-
-                //hide the act labels
-                actLabel1.Visible = false;
-                actLabel2.Visible = false;
-
-                //set player back to the act button
-                player.x = mercyRec.X + 15;
-                player.y = mercyRec.Y + 15;
-
-                //stop MercyMenu() from being called when mercy menu is exited
-                mercyMenuSelected = false;
-
-                Thread.Sleep(150);
-            }
-
-            //call the menus method
-            Menus();
-        }
-        #endregion mercy menu
-        #region marcy menu text
-        private void MercyMenuText()
-        {
-            //set the action names and display them
-            actNames[0] = "Spare";
-            actNames[1] = "Flee";
-            actLabel1.Text = "* Spare";
-            actLabel2.Text = "* Flee";
-
-            //set the action results
-            actText[0] = "* ...";
-            actText[1] = "* You ran away...";
-        }
-        #endregion mercy menu text
 
         #region general menu code
         private void Menus()
@@ -854,6 +835,12 @@ namespace UndertaleBattleSystemPrototype
         #region menu disappear code
         private void MenuDisappear(int i)
         {
+            //set the spare number depending on the action selected
+            spareNum = spareValues[i];
+
+            //check if the player has made the correct choices for the enemy to be spared
+            if (spareNum == 0) { canSpare = true; }
+
             //set output text to the appropraite message and make it visible
             textOutput.Text = actText[i];
             textOutput.Visible = true;
@@ -877,7 +864,8 @@ namespace UndertaleBattleSystemPrototype
             fightSprite = Resources.fightButton;
             actSprite = Resources.actButton;
             itemSprite = Resources.itemButton;
-            mercySprite = Resources.mercyButton;
+            if (canSpare == true) { mercySprite = Resources.mercyButtonSpare; }
+            else { mercySprite = Resources.mercyButton; }
 
             //call the turn made method
             TurnMade();
@@ -907,11 +895,11 @@ namespace UndertaleBattleSystemPrototype
             player.x = -20;
             player.y = -20;
 
-            //wait for 4 seconds before starting the enemy turn if an act was made (so that the player can read lol)
+            //wait for 3 seconds before starting the enemy turn if an act was made (so that the player can read lol)
             if (textOutput.Visible == true)
             {
                 Refresh();
-                Thread.Sleep(4000);
+                Thread.Sleep(3000);
             }
 
             //make the main output label invisible

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Enemy>
+  <Stats hp ="80"
+         atk ="5"
+         def ="2">
+  </Stats>
+  <ActMenu>
+    <Act actName ="Check"
+          actLine1 ="CALUM 5 ATK 2 DEF"
+          actLine2 ="A hurt soul...">
+    </Act>
+    <Act actName ="Comfort"
+          actLine1 ="You comforted Calum."
+          actLine2 ="..."
+          actLine3 ="He doesn't seem to care.">
+    </Act>
+    <Act actName ="Taunt"
+          actLine1 ="You prod at Calum's missing antler"
+          actLine2 ="..."
+          actLine3 ="He looks at you with a mix of anger and sadness.">
+    </Act>
+    <Act actName = "Chat"
+          actLine1 ="You ask Calum what happened to his antler.">
+    </Act>
+  </ActMenu>
+</Enemy>

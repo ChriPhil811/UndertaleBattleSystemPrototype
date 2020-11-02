@@ -48,7 +48,7 @@ namespace UndertaleBattleSystemPrototype
 
         public void OnStart()
         {
-            nori = new Player(20, 170, 150, 20, 20, 20,"");
+            nori = new Player(20, 170, 150, 20, 20, 20);
 
         }
         private void TownScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

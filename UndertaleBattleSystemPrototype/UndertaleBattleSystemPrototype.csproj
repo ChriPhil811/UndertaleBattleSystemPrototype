@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Object.cs" />
     <Compile Include="Screens\LibraryScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -228,6 +229,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\heart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arlos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShopStrip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sharol_WS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calum_WS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Franky_WS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

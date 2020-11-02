@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.textLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -38,11 +39,23 @@
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
+            // textLabel
+            // 
+            this.textLabel.BackColor = System.Drawing.Color.Transparent;
+            this.textLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.textLabel.Location = new System.Drawing.Point(157, 625);
+            this.textLabel.Name = "textLabel";
+            this.textLabel.Size = new System.Drawing.Size(910, 165);
+            this.textLabel.TabIndex = 0;
+            this.textLabel.Text = "label1";
+            this.textLabel.Visible = false;
+            // 
             // TownScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.textLabel);
             this.DoubleBuffered = true;
             this.Name = "TownScreen";
             this.Size = new System.Drawing.Size(1277, 885);
@@ -56,5 +69,6 @@
         #endregion
 
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Label textLabel;
     }
 }

@@ -83,6 +83,36 @@ namespace UndertaleBattleSystemPrototype.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap appartmentStrip {
+            get {
+                object obj = ResourceManager.GetObject("appartmentStrip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arlos {
+            get {
+                object obj = ResourceManager.GetObject("arlos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Calum_WS {
+            get {
+                object obj = ResourceManager.GetObject("Calum_WS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fightButton {
             get {
                 object obj = ResourceManager.GetObject("fightButton", resourceCulture);
@@ -113,6 +143,16 @@ namespace UndertaleBattleSystemPrototype.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Franky_WS {
+            get {
+                object obj = ResourceManager.GetObject("Franky_WS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap heart {
             get {
                 object obj = ResourceManager.GetObject("heart", resourceCulture);
@@ -136,6 +176,16 @@ namespace UndertaleBattleSystemPrototype.Properties {
         internal static System.Drawing.Bitmap itemButtonBlank {
             get {
                 object obj = ResourceManager.GetObject("itemButtonBlank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap library {
+            get {
+                object obj = ResourceManager.GetObject("library", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -284,8 +334,7 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Player&gt;
         ///  &lt;Stats&gt;
-        ///    &lt;General name =&quot;NORI&quot;
-        ///             gold =&quot;0&quot;&gt;
+        ///    &lt;General gold =&quot;0&quot;&gt;
         ///    &lt;/General&gt;
         ///    &lt;Battle currentHP =&quot;40&quot;
         ///            atk =&quot;5&quot;
@@ -304,7 +353,8 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///            heal =&quot;5&quot;&gt;
         ///      &lt;/Item&gt;
         ///      &lt;Item name =&quot;Test Item 3&quot;
-        ///         [rest of string was truncated]&quot;;.
+        ///            heal =&quot;20&quot;&gt;
+        ///      &lt;/It [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Player {
             get {
@@ -313,12 +363,21 @@ namespace UndertaleBattleSystemPrototype.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sharol_WS {
+            get {
+                object obj = ResourceManager.GetObject("Sharol_WS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Enemy&gt;
-        ///  &lt;Stats&gt;
-        ///    &lt;Health&gt;100&lt;/Health&gt;
-        ///    &lt;Attack&gt;5&lt;/Attack&gt;
-        ///    &lt;Defence&gt;5&lt;/Defence&gt;
+        ///  &lt;Stats hp =&quot;100&quot;
+        ///         atk =&quot;5&quot;
+        ///         def =&quot;5&quot;&gt;
         ///  &lt;/Stats&gt;
         ///  &lt;ActMenu&gt;
         ///    &lt;Act actName =&quot;Check&quot;
@@ -331,7 +390,8 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///          actLine3 =&quot;It&apos;s fake laughter though.&quot;&gt;
         ///    &lt;/Act&gt;
         ///    &lt;Act actName =&quot;Taunt&quot;
-        ///          actLine1 =&quot;Test Enemy just s [rest of string was truncated]&quot;;.
+        ///          actLine1 =&quot;Test Enemy just stares at you.&quot;&gt;
+        ///    &lt;/Act&gt;        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestEnemy {
             get {

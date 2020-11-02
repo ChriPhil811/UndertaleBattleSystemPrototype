@@ -5,21 +5,45 @@
          def ="5">
   </Stats>
   <ActMenu>
-    <Act actName ="Check"
+    <Act spareValue ="-1"
+          actName ="Check"
           actLine1 ="TESTENEMY 2 ATK 0 DEF"
           actLine2 ="Basic enemy example">
     </Act>
-    <Act actName ="Joke"
+    <Act spareValue ="1"
+          actName ="Joke"
           actLine1 ="Test Enemy laughs."
           actLine2 ="..."
           actLine3 ="It's fake laughter though.">
     </Act>
-    <Act actName ="Taunt"
+    <Act spareValue ="-1"
+          actName ="Taunt"
           actLine1 ="Test Enemy just stares at you.">
     </Act>
-    <Act actName = "Dance"
+    <Act spareValue ="-1"
+          actName = "Dance"
+          actLine1 = "Test Enemy doesn't like dancing.">
+    </Act>
+
+    <Act1 spareValue ="1"
+          actName ="Check"
+          actLine1 ="TESTENEMY 2 ATK 0 DEF"
+          actLine2 ="Basic enemy example">
+    </Act1>
+    <Act1 spareValue ="1"
+          actName ="Joke"
+          actLine1 ="Test Enemy laughs."
+          actLine2 ="..."
+          actLine3 ="It's fake laughter though.">
+    </Act1>
+    <Act1 spareValue ="-1"
+          actName ="Taunt"
+          actLine1 ="Test Enemy just stares at you.">
+    </Act1>
+    <Act1 spareValue ="0"
+          actName = "Dance"
           actLine1 = "Test Enemy doesn't like dancing."
           actLine2 = "...but they make an exception this time.">
-    </Act>
+    </Act1>
   </ActMenu>
 </Enemy>

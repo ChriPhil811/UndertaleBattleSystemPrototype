@@ -81,6 +81,33 @@ namespace UndertaleBattleSystemPrototype.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Enemy&gt;
+        ///  &lt;Stats hp =&quot;80&quot;
+        ///         atk =&quot;5&quot;
+        ///         def =&quot;2&quot;&gt;
+        ///  &lt;/Stats&gt;
+        ///  &lt;ActMenu&gt;
+        ///    &lt;Act actName =&quot;Check&quot;
+        ///          actLine1 =&quot;CALUM 5 ATK 2 DEF&quot;
+        ///          actLine2 =&quot;A hurt soul...&quot;&gt;
+        ///    &lt;/Act&gt;
+        ///    &lt;Act actName =&quot;Comfort&quot;
+        ///          actLine1 =&quot;You comforted Calum.&quot;
+        ///          actLine2 =&quot;...&quot;
+        ///          actLine3 =&quot;He doesn&apos;t seem to care.&quot;&gt;
+        ///    &lt;/Act&gt;
+        ///    &lt;Act actName =&quot;Taunt&quot;
+        ///          actLine1 =&quot;You prod at Calum&apos;s missing antler&quot;
+        ///          actLi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Calum {
+            get {
+                return ResourceManager.GetString("Calum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap fightButton {
@@ -156,6 +183,26 @@ namespace UndertaleBattleSystemPrototype.Properties {
         internal static System.Drawing.Bitmap mercyButtonBlank {
             get {
                 object obj = ResourceManager.GetObject("mercyButtonBlank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mercyButtonSpare {
+            get {
+                object obj = ResourceManager.GetObject("mercyButtonSpare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mercyButtonSpareBlank {
+            get {
+                object obj = ResourceManager.GetObject("mercyButtonSpareBlank", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -284,8 +331,7 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Player&gt;
         ///  &lt;Stats&gt;
-        ///    &lt;General name =&quot;NORI&quot;
-        ///             gold =&quot;0&quot;&gt;
+        ///    &lt;General gold =&quot;0&quot;&gt;
         ///    &lt;/General&gt;
         ///    &lt;Battle currentHP =&quot;40&quot;
         ///            atk =&quot;5&quot;
@@ -304,7 +350,8 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///            heal =&quot;5&quot;&gt;
         ///      &lt;/Item&gt;
         ///      &lt;Item name =&quot;Test Item 3&quot;
-        ///         [rest of string was truncated]&quot;;.
+        ///            heal =&quot;20&quot;&gt;
+        ///      &lt;/It [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Player {
             get {
@@ -315,23 +362,24 @@ namespace UndertaleBattleSystemPrototype.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Enemy&gt;
-        ///  &lt;Stats&gt;
-        ///    &lt;Health&gt;100&lt;/Health&gt;
-        ///    &lt;Attack&gt;5&lt;/Attack&gt;
-        ///    &lt;Defence&gt;5&lt;/Defence&gt;
+        ///  &lt;Stats hp =&quot;100&quot;
+        ///         atk =&quot;5&quot;
+        ///         def =&quot;5&quot;&gt;
         ///  &lt;/Stats&gt;
         ///  &lt;ActMenu&gt;
-        ///    &lt;Act actName =&quot;Check&quot;
+        ///    &lt;Act spareValue =&quot;-1&quot;
+        ///          actName =&quot;Check&quot;
         ///          actLine1 =&quot;TESTENEMY 2 ATK 0 DEF&quot;
         ///          actLine2 =&quot;Basic enemy example&quot;&gt;
         ///    &lt;/Act&gt;
-        ///    &lt;Act actName =&quot;Joke&quot;
+        ///    &lt;Act spareValue =&quot;1&quot;
+        ///          actName =&quot;Joke&quot;
         ///          actLine1 =&quot;Test Enemy laughs.&quot;
         ///          actLine2 =&quot;...&quot;
         ///          actLine3 =&quot;It&apos;s fake laughter though.&quot;&gt;
         ///    &lt;/Act&gt;
-        ///    &lt;Act actName =&quot;Taunt&quot;
-        ///          actLine1 =&quot;Test Enemy just s [rest of string was truncated]&quot;;.
+        ///    &lt;Act spareValue =&quot;-1&quot;
+        ///          a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestEnemy {
             get {

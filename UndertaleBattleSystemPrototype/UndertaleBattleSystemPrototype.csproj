@@ -159,9 +159,6 @@
     <None Include="Resources\actButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fightButton.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\itemButton.png" />
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\actButtonBlank.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fightButtonBlank.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\itemButtonBlank.png" />
@@ -185,7 +179,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TestEnemy.xml" />
+    <None Include="Resources\TestEnemy.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fightUISprite.png" />
@@ -228,6 +224,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\heart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calum.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mercyButtonSpare.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mercyButtonSpareBlank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fightButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fightButtonBlank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

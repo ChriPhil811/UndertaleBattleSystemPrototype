@@ -34,5 +34,24 @@ namespace UndertaleBattleSystemPrototype
         {
             x += speed;
         }
+        public void Stop(string direction, int speed)
+        {
+            switch (direction)
+            {
+                case "up":
+                    y += speed;
+                    break;
+                case "left":
+                    x += speed;
+                    break;
+                case "down":
+                    y -= speed;
+                    break;
+                case "right":
+                    x -= speed;
+                    break;
+            }
+
+        }
     }
 }

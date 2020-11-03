@@ -47,13 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Object.cs" />
-    </Compile>
-    <Compile Include="Pause.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Pause.Designer.cs">
-      <DependentUpon>Pause.cs</DependentUpon>
-    </Compile>
     <Compile Include="Screens\LibraryScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,9 +106,6 @@
     <Compile Include="Screens\TownScreen.Designer.cs">
       <DependentUpon>TownScreen.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Pause.resx">
-      <DependentUpon>Pause.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Screens\BattleScreen.resx">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,9 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\actButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fightButton.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\itemButton.png" />
@@ -240,6 +227,12 @@
     <None Include="Resources\heart.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arlos.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\ShopStrip.png" />
   </ItemGroup>
   <ItemGroup>
@@ -250,21 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Franky_WS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\appartement1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\appartement2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Library.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Arlos.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\text.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Calum.xml">

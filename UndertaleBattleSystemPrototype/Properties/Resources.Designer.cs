@@ -83,9 +83,19 @@ namespace UndertaleBattleSystemPrototype.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap appartmentStrip {
+        internal static System.Drawing.Bitmap appartement1 {
             get {
-                object obj = ResourceManager.GetObject("appartmentStrip", resourceCulture);
+                object obj = ResourceManager.GetObject("appartement1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap appartement2 {
+            get {
+                object obj = ResourceManager.GetObject("appartement2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -396,6 +406,26 @@ namespace UndertaleBattleSystemPrototype.Properties {
         internal static string TestEnemy {
             get {
                 return ResourceManager.GetString("TestEnemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Dialogue&gt;
+        ///  &lt;doors&gt;
+        ///    &lt;text value =&quot;This door is locked.&quot;&gt;&lt;/text&gt;
+        ///    &lt;text value =&quot;...A small dog?&quot;&gt;&lt;/text&gt;
+        ///    &lt;text value =&quot;No answer.&quot;&gt;&lt;/text&gt;
+        ///    &lt;text value =&quot;There&apos;s a frat party going on but you&apos;re just a kid. No party for you.&quot;&gt;&lt;/text&gt;
+        ///  &lt;/doors&gt;
+        ///  &lt;Sharol&gt;
+        ///    &lt;text value =&quot; &quot;&gt;&lt;/text&gt;
+        ///  &lt;/Sharol&gt;
+        ///&lt;/Dialogue&gt;.
+        /// </summary>
+        internal static string text {
+            get {
+                return ResourceManager.GetString("text", resourceCulture);
             }
         }
     }

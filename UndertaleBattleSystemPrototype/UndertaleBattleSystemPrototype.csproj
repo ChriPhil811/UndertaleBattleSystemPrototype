@@ -181,9 +181,6 @@
     <None Include="Resources\actButtonBlank.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fightButtonBlank.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\itemButtonBlank.png" />
   </ItemGroup>
   <ItemGroup>

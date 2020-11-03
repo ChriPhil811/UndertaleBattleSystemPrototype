@@ -19,12 +19,36 @@ namespace UndertaleBattleSystemPrototype
     {
         #region variables and lists
 
-        //make a globally useable spare variable
-        public static Boolean canSpare = false;
+        #region enemy attack variables (sorry these are in a section of their own, it made it easier at the time to find them)
+        //enemy attack variables
+        Boolean hornLeft = true;
+        Boolean hornSpaceChange = false;
+        int attackSpeed = 5;
+        int spaceBetweenAttacks = 40;
 
-        //player key press variables
-        Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
+        #endregion enemy attack variables (sorry these are in a section of their own, it made it easier at the time to find them)
 
+        #region xml readers, brushes, images, and other
+        //create an xml reader for the enemy file and player file
+        XmlReader eReader, pReader;
+
+        //brush for walls, player attacks, and hp bars
+        SolidBrush wallBrush = new SolidBrush(Color.White);
+        SolidBrush attackBrush = new SolidBrush(Color.Indigo);
+        SolidBrush redBrush = new SolidBrush(Color.Red);
+        SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
+
+        //create a new image for the player sprite and button sprites
+        Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite, fightUISprite;
+
+        //create the player
+        Player player = new Player();
+
+        //create the enemy
+        Enemy enemy = new Enemy();
+        #endregion xml readers, brushes, images, and other
+
+        #region ints and strings
         //int for after turn counting and enemy turn counting
         int afterTurnCounter = 0;
         int enemyTurnCounter = 500;
@@ -35,6 +59,17 @@ namespace UndertaleBattleSystemPrototype
         //string for damage number drawing
         string playerDamageNum;
 
+        //string for enemy attack name
+        string attackName;
+        #endregion ints and strings
+
+        #region booleans
+        //make a globally useable spare variable
+        public static Boolean canSpare = false;
+
+        //player key press variables
+        Boolean wDown, aDown, sDown, dDown, spaceDown, shiftDown;
+
         //boolean for checking if it's the enemy's turn or not 
         Boolean enemyTurn = false;
 
@@ -43,25 +78,9 @@ namespace UndertaleBattleSystemPrototype
 
         //boolean for checking if the player has made an attack
         Boolean playerAttack = false;
+        #endregion booleans
 
-        //create an xml reader for the enemy file and player file
-        XmlReader eReader, pReader;
-
-        //brush for walls, hp bar, and projectiles
-        SolidBrush whiteBrush = new SolidBrush(Color.White);
-        SolidBrush grayBrush = new SolidBrush(Color.Indigo);
-        SolidBrush redBrush = new SolidBrush(Color.Red);
-        SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
-
-        //create the player
-        Player player = new Player();
-
-        //create the enemy
-        Enemy enemy = new Enemy();
-
-        //create a new image for the player sprite and button sprites
-        Image playerSprite, fightSprite, actSprite, itemSprite, mercySprite, fightUISprite;
-
+        #region rectangles
         //create rectangles for buttons
         Rectangle fightRec, actRec, itemRec, mercyRec;
 
@@ -76,10 +95,9 @@ namespace UndertaleBattleSystemPrototype
         Rectangle remainingHPRec = new Rectangle(410, 550, 80, 20);
         Rectangle enemyMaxHPRec = new Rectangle(372, 50, 200, 20);
         Rectangle enemyRemainingHPRec = new Rectangle(372, 50, 200, 20);
+        #endregion rectangles
 
-        //random number gen
-        Random randNum = new Random();
-
+        #region lists
         //new list for battle area walls
         List<Rectangle> arenaWalls = new List<Rectangle>();
 
@@ -88,6 +106,16 @@ namespace UndertaleBattleSystemPrototype
         List<string> actText = new List<string>() {" ", " ", " ", " "};
         List<int> spareValues = new List<int>() {0, 0, 0, 0};
         List<int> itemHeals = new List<int>() {0, 0, 0, 0};
+
+        //lists for enemy turn
+        List<string> enemyAttacks = new List<string>();
+        List<int> enemyAttackValues = new List<int>();
+        List<Rectangle> attackRecs = new List<Rectangle>();
+        List<Projectile> attacks = new List<Projectile>();
+        #endregion lists
+
+        //random number generator
+        Random randNum = new Random();
 
         #endregion variables and lists
 
@@ -98,6 +126,9 @@ namespace UndertaleBattleSystemPrototype
 
             //screen setup
             OnStart();
+
+            //call the attack type method
+            AttackType();
 
             //hide the cursor
             Cursor.Hide();
@@ -233,6 +264,8 @@ namespace UndertaleBattleSystemPrototype
             if (enemyTurn == true && enemyTurnCounter > 0)
             {
                 enemyTurnCounter--;
+
+                EnemyAttack(enemyTurnCounter);
 
                 #region player movement
                 //player movement
@@ -477,15 +510,26 @@ namespace UndertaleBattleSystemPrototype
             //draw the text box/arena walls
             foreach(Rectangle r in arenaWalls)
             {
-                e.Graphics.FillRectangle(whiteBrush, r);
+                e.Graphics.FillRectangle(wallBrush, r);
             }
 
             //draw the fight UI if the player is in the fight menu
             if (fightMenuSelected == true)
             {
                 e.Graphics.DrawImage(fightUISprite, arenaWalls[0].X + 5, arenaWalls[2].Y + 5, 838, 195);
-                e.Graphics.FillRectangle(grayBrush, attackRec);
+                e.Graphics.FillRectangle(attackBrush, attackRec);
             }
+
+            #region enemy attacks
+
+            foreach (Projectile p in attacks)
+            {
+                e.Graphics.DrawImage(p.image, p.x, p.y, p.width, p.height);
+            }
+
+            #endregion enemy attacks
+
+            #region enemy health bar
 
             //draw the enemy health bar and damage if the player has attacked, then pause before going to enemy turn
             if (playerAttack == true)
@@ -511,6 +555,10 @@ namespace UndertaleBattleSystemPrototype
                 }
             }
 
+            #endregion enemy health bar
+
+            #region player UI
+
             //draw the buttons
             e.Graphics.DrawImage(fightSprite, fightRec);
             e.Graphics.DrawImage(actSprite, actRec);
@@ -523,6 +571,8 @@ namespace UndertaleBattleSystemPrototype
 
             //draw the player
             e.Graphics.DrawImage(playerSprite, player.x, player.y);
+
+            #endregion player UI
         }
         #endregion paint graphics
 
@@ -924,10 +974,109 @@ namespace UndertaleBattleSystemPrototype
             arenaWalls.Add(rightWall);
             arenaWalls.Add(topWall);
             arenaWalls.Add(bottomWall);
+
+            //randomly choose an attack to do from the available attacks
+            int attackValue = randNum.Next(enemyAttackValues.Count());
+
+            //set the attack name correctly
+            attackName = enemyAttacks[attackValue];
         }
         #endregion turn made code (going into the enemy turn)
 
         #endregion menu methods
+
+        #region enemy turn methods
+
+        #region attack type method (filling in the possible attacks)
+        private void AttackType()
+        {
+            //read from the enemy xml file
+            eReader = XmlReader.Create("Resources/TestEnemy.xml");
+
+            //fill in the enemy attacks lists from the enemy xml
+            while (eReader.Read())
+            {
+                eReader.ReadToFollowing("Attack");
+                enemyAttacks.Add(eReader.GetAttribute("name"));
+                enemyAttackValues.Add(Convert.ToInt16(eReader.GetAttribute("value")));
+            }
+
+            //remove the last thing in both lists
+            enemyAttacks.RemoveAt(enemyAttacks.Count() - 1);
+            enemyAttackValues.RemoveAt(enemyAttackValues.Count() - 1);
+
+            //stop the reader
+            eReader.Close();
+        }
+        #endregion attack type method (filling in the possible attacks)
+        #region enemy attack
+        private void EnemyAttack(int timer)
+        {
+            //check which attack was randomly selected and do it
+            if(attackName == "HornAttack") 
+            { 
+                //if it's been 1 second, and the enemy turn isn't over, spawn a new horn attack
+                if (timer % spaceBetweenAttacks == 0  && timer != 0)
+                {
+                    //alternate between left and right attacks
+                    if (hornLeft == true)
+                    {
+                        Projectile hornProjL = new Projectile(arenaWalls[0].X + 5, arenaWalls[3].Y, 200, 100, Resources.attackHornO);
+                        attacks.Add(hornProjL);
+                        hornLeft = false;
+                    }
+                    else
+                    {
+                        Projectile hornProjR = new Projectile(arenaWalls[1].X - 200, arenaWalls[3].Y, 200, 100, Resources.attackHorn);
+                        attacks.Add(hornProjR);
+                        hornLeft = true;
+                        
+                        //make the attack get more difficult as time goes on
+                        if (hornSpaceChange == true && spaceBetweenAttacks >= 30)
+                        {
+                            attackSpeed += 1;
+                            spaceBetweenAttacks -= 10;
+                            hornSpaceChange = false;
+                        }
+                        else
+                        {
+                            hornSpaceChange = true;
+                        }
+                    }
+
+                    //clear the attack rec list
+                    attackRecs.Clear();
+
+                    //for each projectile, create a rec for collisions
+                    foreach (Projectile p in attacks)
+                    {
+                        Rectangle horn = new Rectangle(p.x, p.y, p.width, p.height);
+                        attackRecs.Add(horn);
+                    }
+                }
+                //reset the attack speed and spacing
+                else if (timer == 0)
+                {
+                    attackSpeed = 4;
+                    spaceBetweenAttacks = 50;
+                }
+
+                //move the projectiles according to the attack and get rid of the first one if it goes out of the arena box
+                foreach (Projectile p in attacks) 
+                { 
+                    p.HornAttack(attackSpeed);
+
+                    if (p.y <= arenaWalls[2].Y - 50)
+                    {
+                        attacks.Remove(p);
+                        break;
+                    }
+                }
+            }
+        }
+        #endregion enemy attack
+
+        #endregion enemy turn methods
 
         #region player xml update method
         private void PlayerXmlUpdate(int i)

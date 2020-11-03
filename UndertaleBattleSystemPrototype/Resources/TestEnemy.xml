@@ -4,6 +4,14 @@
          atk ="5"
          def ="5">
   </Stats>
+  <Attacks>
+    <Attack name ="HornAttack"
+            value ="0">
+    </Attack>
+    <Attack name ="HornAttack"
+            value ="1">
+    </Attack>
+  </Attacks>
   <ActMenu>
     <Act spareValue ="-1"
           actName ="Check"

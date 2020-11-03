@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Object.cs" />
+    <Compile Include="Classes\Object.cs" />
     <Compile Include="Screens\LibraryScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -260,6 +260,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fightButtonBlank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackFistL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackFistD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackLeaves.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackLeavesO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackHoof.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackHorn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attackHornO.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

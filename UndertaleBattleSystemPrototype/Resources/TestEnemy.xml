@@ -5,8 +5,12 @@
          def ="5">
   </Stats>
   <Attacks>
-    <Attack name ="testAttack1"></Attack>
-    <Attack name ="testAttack2"></Attack>
+    <Attack name ="HornAttack"
+            value ="0">
+    </Attack>
+    <Attack name ="HornAttack"
+            value ="1">
+    </Attack>
   </Attacks>
   <ActMenu>
     <Act spareValue ="-1"

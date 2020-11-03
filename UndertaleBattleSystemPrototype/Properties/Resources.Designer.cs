@@ -101,6 +101,76 @@ namespace UndertaleBattleSystemPrototype.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackFistD {
+            get {
+                object obj = ResourceManager.GetObject("attackFistD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackFistL {
+            get {
+                object obj = ResourceManager.GetObject("attackFistL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackHoof {
+            get {
+                object obj = ResourceManager.GetObject("attackHoof", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackHorn {
+            get {
+                object obj = ResourceManager.GetObject("attackHorn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackHornO {
+            get {
+                object obj = ResourceManager.GetObject("attackHornO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackLeaves {
+            get {
+                object obj = ResourceManager.GetObject("attackLeaves", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap attackLeavesO {
+            get {
+                object obj = ResourceManager.GetObject("attackLeavesO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Enemy&gt;
         ///  &lt;Stats hp =&quot;80&quot;
@@ -426,6 +496,14 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///         atk =&quot;5&quot;
         ///         def =&quot;5&quot;&gt;
         ///  &lt;/Stats&gt;
+        ///  &lt;Attacks&gt;
+        ///    &lt;Attack name =&quot;TestAttack1&quot;
+        ///            value =&quot;0&quot;&gt;
+        ///    &lt;/Attack&gt;
+        ///    &lt;Attack name =&quot;TestAttack2&quot;
+        ///            value =&quot;1&quot;&gt;
+        ///    &lt;/Attack&gt;
+        ///  &lt;/Attacks&gt;
         ///  &lt;ActMenu&gt;
         ///    &lt;Act spareValue =&quot;-1&quot;
         ///          actName =&quot;Check&quot;
@@ -433,13 +511,7 @@ namespace UndertaleBattleSystemPrototype.Properties {
         ///          actLine2 =&quot;Basic enemy example&quot;&gt;
         ///    &lt;/Act&gt;
         ///    &lt;Act spareValue =&quot;1&quot;
-        ///          actName =&quot;Joke&quot;
-        ///          actLine1 =&quot;Test Enemy laughs.&quot;
-        ///          actLine2 =&quot;...&quot;
-        ///          actLine3 =&quot;It&apos;s fake laughter though.&quot;&gt;
-        ///    &lt;/Act&gt;
-        ///    &lt;Act spareValue =&quot;-1&quot;
-        ///          a [rest of string was truncated]&quot;;.
+        ///          actName =&quot;Joke [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestEnemy {
             get {

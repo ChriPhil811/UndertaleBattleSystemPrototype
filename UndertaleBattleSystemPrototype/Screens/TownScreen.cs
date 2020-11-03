@@ -44,6 +44,7 @@ namespace UndertaleBattleSystemPrototype
         int talkingS = 0, talkingC = 0, talkingF = 0;
         #endregion
 
+        //github comment
         //fighting variables
         Boolean fightCal, spareCal;
         public static string enemyName;
